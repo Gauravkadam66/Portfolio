@@ -1,0 +1,82 @@
+/* ==========================================================================
+   DESIGN TOKENS — GAURAV PORTFOLIO
+   Dark Cinematic Atmosphere Pass · Apple-Level Restraint · Monochromatic Navy
+   ========================================================================== */
+
+:root {
+  /* Color Palette — Dark Cinematic Base */
+  --bg-primary: #050812;       /* Very dark navy-black base (not pure black #000000) */
+  --bg-surface: #090E1F;       /* Deep navy surface */
+  --bg-dark: #02040A;          /* Deepest shadow layer */
+  
+  --text-primary: #F2F3F5;     /* Crisp light off-white */
+  --text-secondary: #8D929B;   /* Secondary light grey */
+  --text-muted: #8D929B;       /* Muted body copy */
+  --text-light: #646A73;       /* Metadata & technical labels */
+  --text-inverse: #050812;     /* Inverted text */
+  
+  /* Brand Atmospheric Navy (#0E163D) */
+  --brand-navy: #0E163D;
+  
+  /* UI Accent: Restrained blue-slate derived from #0E163D for visibility */
+  --accent-blue: #3E4E80;
+  --accent-blue-hover: #5064A1;
+  --accent-blue-light: rgba(14, 22, 61, 0.45);
+  --accent-playhead: #4A5A8C;
+
+  /* Subtle Dividers & Borders (Clean white/grey with 8% opacity) */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-muted: rgba(255, 255, 255, 0.12);
+  --border-dark: rgba(255, 255, 255, 0.18);
+
+  /* Typography Stack */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: 'DM Mono', 'Geist Mono', 'IBM Plex Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Scale Hierarchy (fluid clamp) */
+  --text-display: clamp(4rem, 9.5vw, 10.5rem);       /* 80px - 180px */
+  --text-section-hd: clamp(2.5rem, 5.5vw, 5.5rem);    /* 48px - 100px */
+  --text-project-title: clamp(1.25rem, 1.8vw, 1.75rem); /* 20px - 28px */
+  --text-subheading: clamp(1.15rem, 1.5vw, 1.5rem);
+  --text-body: clamp(0.95rem, 1.1vw, 1.125rem);       /* 15px - 18px */
+  --text-meta: clamp(0.72rem, 0.85vw, 0.875rem);      /* 11px - 14px */
+  --text-micro: 0.6875rem;                            /* 11px */
+
+  /* Spacing System */
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --space-160: 160px;
+
+  /* Canvas & Grid */
+  --canvas-max: 1440px;
+  --container-pad: clamp(1.25rem, 4vw, 4rem);
+
+  /* Radii: Crisp corners or 2-4px max */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  /* Motion Timing */
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snappy: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --transition-fast: 200ms var(--ease-editorial);
+  --transition-med: 450ms var(--ease-editorial);
+  --transition-slow: 700ms var(--ease-editorial);
+
+  /* NLE Timeline & Scrubber */
+  --timeline-track: rgba(255, 255, 255, 0.10);
+  --timeline-playhead: #4A5A8C;
+
+  /* Atmospheric Tuning Variables */
+  --blob-opacity: 0.9;
+  --grid-opacity: 0.035;
+  --vignette-opacity: 0.35;
+}

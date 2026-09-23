@@ -1,0 +1,306 @@
+/* ==========================================================================
+   RESPONSIVE & ACCESSIBILITY STYLESHEET — GAURAV PORTFOLIO
+   Tablets · Mobile Devices · Keyboard Focus · Reduced Motion
+   ========================================================================== */
+
+/* Focus Styles for Keyboard Accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   Laptop & Medium Desktop Screens (<= 1200px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  :root {
+    --container-pad: 2.5rem;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-48);
+  }
+
+  .about-label {
+    position: static;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Tablets & Small Screens (<= 992px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  :root {
+    --container-pad: 2rem;
+    --space-128: 80px;
+    --space-160: 96px;
+  }
+
+  .video-grid {
+    gap: var(--space-40) var(--space-24);
+  }
+
+  .reels-grid-3col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-40) var(--space-24);
+  }
+
+  .contact-details-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-48);
+  }
+
+  .contact-bio-col,
+  .contact-links-col {
+    grid-column: span 1;
+  }
+
+  .nav-timeline-status {
+    display: none; /* Simplify nav on tablet/mobile */
+  }
+
+  .hero-discipline-tags {
+    display: none;
+  }
+
+  .hero-top-meta {
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+
+  .hero-roles {
+    margin-bottom: var(--space-32);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Mobile Devices (<= 768px)
+   Deliberately designed, not simply scaled down
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 1.25rem;
+    --space-64: 40px;
+    --space-96: 56px;
+    --space-128: 64px;
+    --space-160: 72px;
+  }
+
+  /* Disable custom cursor on touch/mobile */
+  .custom-cursor {
+    display: none !important;
+  }
+
+  .site-nav {
+    padding: var(--space-16) 0;
+  }
+
+  .nav-links {
+    gap: var(--space-16);
+  }
+
+  .nav-link {
+    font-size: var(--text-micro);
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding-top: calc(var(--space-96) + 20px);
+    padding-bottom: var(--space-48);
+  }
+
+  .hero-name {
+    font-size: clamp(3rem, 14vw, 4.8rem);
+    margin-bottom: var(--space-24);
+  }
+
+  .role-line {
+    font-size: 1.5rem;
+  }
+
+  .hero-manifesto {
+    font-size: 1.2rem;
+    padding-left: var(--space-16);
+  }
+
+  .hero-footer-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-24);
+  }
+
+  .section-timeline-header {
+    padding-top: var(--space-64);
+    margin-bottom: var(--space-32);
+  }
+
+  .timeline-motif-bar {
+    gap: var(--space-12);
+    padding-bottom: var(--space-16);
+    margin-bottom: var(--space-24);
+  }
+
+  /* Stack Reels vertically or 1-col on mobile */
+  .reels-grid-3col {
+    grid-template-columns: 1fr;
+    gap: var(--space-48);
+  }
+
+  .subsection-meta {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .project-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  .capability-item {
+    font-size: 1.15rem;
+    padding: var(--space-16) 0;
+  }
+
+  .contact-hero-text {
+    font-size: clamp(2.2rem, 10vw, 3.4rem);
+    margin-bottom: var(--space-40);
+  }
+
+  .contact-link-row {
+    font-size: 1rem;
+    padding: var(--space-16) 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  .contact-link-row:hover,
+  .contact-link-row:focus-visible {
+    padding-left: 0;
+  }
+
+  .contact-closing {
+    margin-top: var(--space-40);
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-12);
+  }
+
+  .footer-colophon {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-8);
+  }
+
+  /* Atmospheric Background Tuning for Mobile */
+  :root {
+    --blob-opacity: 0.62;
+    --grid-opacity: 0.02;
+  }
+
+  .blob-primary {
+    width: 110vw;
+    height: 110vw;
+    filter: blur(70px);
+    -webkit-filter: blur(70px);
+  }
+
+  .blob-secondary {
+    width: 90vw;
+    height: 90vw;
+    filter: blur(60px);
+    -webkit-filter: blur(60px);
+  }
+
+  .hero-glow {
+    width: 120vw;
+    filter: blur(60px);
+    -webkit-filter: blur(60px);
+  }
+
+  /* Video HUD always accessible on touch */
+  .video-hud {
+    opacity: 1;
+    padding: var(--space-12) var(--space-16);
+    background: linear-gradient(to top, rgba(3, 5, 11, 0.90) 0%, rgba(3, 5, 11, 0) 100%);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small phones (<= 600px): numbered 16:9 grids go single-column
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .video-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-40);
+  }
+}
+
+/* Narrow phones: drop the timecode so play / audio / expand never collide */
+@media (max-width: 480px) {
+  .hud-timecode {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Touch devices of any width: no hover, so keep controls visible and seek bar thicker
+   -------------------------------------------------------------------------- */
+@media (hover: none) {
+  .video-hud {
+    opacity: 1;
+  }
+
+  .hud-timeline-progress {
+    height: 3px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: prefers-reduced-motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Freeze atmospheric blobs and disable background movement */
+  .atmospheric-blob-layer,
+  .editorial-bg-grid,
+  .hero-glow {
+    animation: none !important;
+  }
+
+  /* Typewriter is replaced by static GAURAV in JS; hide the caret regardless */
+  .typewriter-caret {
+    display: none !important;
+  }
+
+  .cinematic-backdrop {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .scroll-prompt-arrow {
+    animation: none !important;
+  }
+
+  .timeline-scrubber-fill,
+  .timeline-scrubber-head,
+  .video-exhibition-frame {
+    transition: none !important;
+  }
+}

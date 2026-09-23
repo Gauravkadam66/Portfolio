@@ -1,0 +1,16 @@
+# Dependencies & build output
+node_modules/
+dist/
+.vite/
+
+# In-progress video encodes
+*.tmp.mp4
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Vercel
+.vercel

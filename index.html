@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAURAV — Creative Director & Motion Designer</title>
+  <meta name="description" content="Portfolio of Gaurav — Creative Director & Motion Designer. Storytelling, pacing, visual language and creative direction.">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="./css/design-tokens.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23050812'/><text y='68' x='50' text-anchor='middle' font-size='60' font-family='sans-serif' font-weight='bold' fill='%23F2F3F5'>G</text></svg>">
+</head>
+<body>
+
+  <!-- Cinematic Atmospheric Background Architecture -->
+  <div class="cinematic-backdrop" id="cinematic-backdrop" aria-hidden="true">
+    <!-- Primary & Secondary Wandering Navy Blobs (#0E163D) -->
+    <div class="atmospheric-blob-layer blob-primary"></div>
+    <div class="atmospheric-blob-layer blob-secondary"></div>
+
+    <!-- Unique Editorial / Technical Timeline Grid -->
+    <div class="editorial-bg-grid"></div>
+
+    <!-- Subtle Viewport Depth Vignette -->
+    <div class="cinematic-vignette"></div>
+  </div>
+
+  <!-- Sticky Minimal Navigation -->
+  <header class="site-nav" id="site-nav">
+    <div class="canvas-container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo" aria-label="Gaurav Home">
+          GAURAV
+        </a>
+
+        <!-- Timeline Playhead Scrubber in Nav (Timecode removed) -->
+        <div class="nav-timeline-status" aria-hidden="true">
+          <span>TIMELINE</span>
+          <div class="nav-timeline-bar">
+            <div class="nav-timeline-progress" id="nav-timeline-progress"></div>
+          </div>
+        </div>
+
+        <nav aria-label="Main Navigation">
+          <ul class="nav-links">
+            <li><a href="#selected-work" class="nav-link">WORK</a></li>
+            <li><a href="#about" class="nav-link">ABOUT</a></li>
+            <li><a href="#contact" class="nav-link">CONTACT</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================================
+       01 — HERO
+       Full-bleed background video · Typewriter name · Quiet Confidence
+       ====================================================================== -->
+  <section class="hero-section" id="hero">
+
+    <!-- Background media: replace public/assets/videos/hero_bg.mp4 to swap the video -->
+    <div class="hero-media" aria-hidden="true">
+      <video class="hero-bg-video" id="hero-bg-video" src="/assets/videos/hero_bg.mp4" autoplay muted loop playsinline preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1"></video>
+      <div class="hero-media-overlay"></div>
+      <div class="hero-glow"></div>
+    </div>
+
+    <div class="canvas-container hero-inner">
+
+      <!-- Top Meta Bar -->
+      <div class="hero-top-meta">
+        <div class="hero-status-pill">
+          <span>AVAILABLE FOR THE RIGHT PROJECT</span>
+        </div>
+        <div class="hero-origin mono">
+          BASED IN INDIA · WORKING WORLDWIDE
+        </div>
+      </div>
+
+      <!-- Main Typography Hierarchy -->
+      <div class="hero-main-content">
+        <h1 class="hero-name">
+          <span class="sr-only">Gaurav</span>
+          <span class="typewriter" id="hero-typewriter" aria-hidden="true"><span class="typewriter-text">GAURAV</span><span class="typewriter-caret"></span></span>
+        </h1>
+
+        <div class="hero-roles">
+          <div class="role-line">
+            <span class="role-interactive" tabindex="0" aria-label="Creative Director, in the making">
+              <span class="role-text-primary">CREATIVE DIRECTOR</span>
+              <span class="role-text-hover" aria-hidden="true">IN THE MAKING</span>
+            </span>
+            <span class="role-separator" aria-hidden="true">/</span>
+            <span class="role-interactive" tabindex="0" aria-label="Motion Designer, in motion">
+              <span class="role-text-primary">MOTION DESIGNER</span>
+              <span class="role-text-hover" aria-hidden="true">IN MOTION</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Primary Statement -->
+        <blockquote class="hero-manifesto">
+          “I start with what’s there. Then I figure out what it could become.”
+        </blockquote>
+      </div>
+
+      <!-- Footer Meta & Minimal Scroll Indicator -->
+      <div class="hero-footer-meta">
+        <a href="#selected-work" class="scroll-prompt">
+          <span>SCROLL TO EXPLORE</span>
+          <span class="scroll-prompt-arrow" aria-hidden="true">↓</span>
+        </a>
+
+        <div class="hero-discipline-tags mono">
+          <span>OBSERVE</span>
+          <span>·</span>
+          <span>FIND</span>
+          <span>·</span>
+          <span>BUILD</span>
+          <span>·</span>
+          <span>REFINE</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       02 — THE WORK
+       01 / Figuring It Out (Flagship)
+       ====================================================================== -->
+  <section class="section-timeline-header" id="selected-work">
+    <div class="canvas-container">
+
+      <div class="timeline-motif-bar">
+        <span class="timeline-sec-num">02 / WORK</span>
+        <div class="timeline-scrubber-track">
+          <div class="timeline-scrubber-fill"></div>
+          <div class="timeline-scrubber-head"></div>
+        </div>
+      </div>
+
+      <div class="section-title-wrap">
+        <h2 class="section-heading">THE WORK</h2>
+        <p class="section-statement">Ideas are easy. Making them feel right is the work.</p>
+      </div>
+
+      <div class="section-body">
+        <div class="subsection">
+          <div class="subsection-header">
+            <span class="subsection-index">01 /</span>
+            <span class="subsection-meta">EDITING · MOTION · STORY</span>
+          </div>
+
+          <!-- Flagship Exhibition Project -->
+          <div class="exhibition-project reveal-on-scroll">
+            <div class="video-exhibition-frame aspect-16-9" data-motion-theme="selected" data-duration="14" data-video-src="/assets/videos/flagship_01.mp4">
+              <canvas class="canvas-player" aria-label="Rareliquid — How to break into investment banking"></canvas>
+              <div class="video-hud">
+                <div class="hud-left">
+                  <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                  <span class="hud-timecode">TC 00:00:00:00</span>
+                </div>
+                <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                <div class="hud-right">
+                  <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                  <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">EXPAND ↗</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="project-details">
+              <div>
+                <h3 class="project-title">
+                  <a href="https://www.youtube.com/@rareliquid/videos" target="_blank" rel="noopener noreferrer" class="project-title-link">
+                    <span class="project-title-text">Rareliquid | How to break into investment banking full guide</span>
+                    <span class="project-title-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </h3>
+                <p class="project-disciplines">Video Editing · Motion Design · Sound Design</p>
+              </div>
+              <div class="project-year">2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       03 — VSL
+       "When the message matters, every second has a job."
+       ====================================================================== -->
+  <section class="section-timeline-header" id="vsl">
+    <div class="canvas-container">
+
+      <div class="timeline-motif-bar">
+        <span class="timeline-sec-num">03 / VSL</span>
+        <div class="timeline-scrubber-track">
+          <div class="timeline-scrubber-fill"></div>
+          <div class="timeline-scrubber-head"></div>
+        </div>
+      </div>
+
+      <div class="section-title-wrap">
+        <h2 class="section-heading">VSL</h2>
+        <p class="section-statement">When the message matters, every second has a job.</p>
+      </div>
+
+      <div class="section-body video-grid">
+
+        <div class="video-cell reveal-on-scroll">
+          <div class="video-cell-index">01</div>
+          <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="10" data-video-src="/assets/videos/vsl_01.mp4">
+            <canvas class="canvas-player" aria-label="VSL 01"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                <span class="hud-timecode">TC 00:00:00:00</span>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-cell reveal-on-scroll">
+          <div class="video-cell-index">02</div>
+          <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="12" data-video-src="/assets/videos/vsl_02.mp4">
+            <canvas class="canvas-player" aria-label="VSL 02"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                <span class="hud-timecode">TC 00:00:00:00</span>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-cell reveal-on-scroll">
+          <div class="video-cell-index">03</div>
+          <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="11" data-video-src="/assets/videos/vsl_03.mp4">
+            <canvas class="canvas-player" aria-label="VSL 03"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                <span class="hud-timecode">TC 00:00:00:00</span>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-cell reveal-on-scroll">
+          <div class="video-cell-index">04</div>
+          <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="12" data-video-src="/assets/videos/vsl_04.mp4">
+            <canvas class="canvas-player" aria-label="VSL 04"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                <span class="hud-timecode">TC 00:00:00:00</span>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       04 — LONG-FORM / YOUTUBE
+       01 / Explainers (4) · 02 / Podcasts (2)
+       ====================================================================== -->
+  <section class="section-timeline-header" id="long-form">
+    <div class="canvas-container">
+
+      <div class="timeline-motif-bar">
+        <span class="timeline-sec-num">04 / LONG-FORM</span>
+        <div class="timeline-scrubber-track">
+          <div class="timeline-scrubber-fill"></div>
+          <div class="timeline-scrubber-head"></div>
+        </div>
+      </div>
+
+      <div class="section-title-wrap">
+        <h2 class="section-heading">LONG-FORM / YOUTUBE</h2>
+      </div>
+
+      <div class="section-body">
+
+        <!-- 01 / EXPLAINERS -->
+        <div class="subsection">
+          <div class="subsection-header">
+            <span class="subsection-index">01 /</span>
+            <h3 class="subsection-title">EXPLAINERS</h3>
+          </div>
+          <p class="subsection-desc">Making complex ideas easy to follow without making them feel boring.</p>
+
+          <div class="video-grid">
+
+            <div class="video-cell reveal-on-scroll">
+              <div class="video-cell-index">01</div>
+              <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="15" data-video-src="/assets/videos/explainer_01.mp4">
+                <canvas class="canvas-player" aria-label="Explainer 01"></canvas>
+                <div class="video-hud">
+                  <div class="hud-left">
+                    <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                    <span class="hud-timecode">TC 00:00:00:00</span>
+                  </div>
+                  <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                  <div class="hud-right">
+                    <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                    <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-cell reveal-on-scroll">
+              <div class="video-cell-index">02</div>
+              <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="13" data-video-src="/assets/videos/explainer_02.mp4">
+                <canvas class="canvas-player" aria-label="Explainer 02"></canvas>
+                <div class="video-hud">
+                  <div class="hud-left">
+                    <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                    <span class="hud-timecode">TC 00:00:00:00</span>
+                  </div>
+                  <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                  <div class="hud-right">
+                    <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                    <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-cell reveal-on-scroll">
+              <div class="video-cell-index">03</div>
+              <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="14" data-video-src="/assets/videos/explainer_03.mp4">
+                <canvas class="canvas-player" aria-label="Explainer 03"></canvas>
+                <div class="video-hud">
+                  <div class="hud-left">
+                    <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                    <span class="hud-timecode">TC 00:00:00:00</span>
+                  </div>
+                  <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                  <div class="hud-right">
+                    <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                    <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-cell reveal-on-scroll">
+              <div class="video-cell-index">04</div>
+              <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="12" data-video-src="/assets/videos/explainer_04.mp4">
+                <canvas class="canvas-player" aria-label="Explainer 04"></canvas>
+                <div class="video-hud">
+                  <div class="hud-left">
+                    <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                    <span class="hud-timecode">TC 00:00:00:00</span>
+                  </div>
+                  <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                  <div class="hud-right">
+                    <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                    <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 02 / PODCASTS -->
+        <div class="subsection">
+          <div class="subsection-header">
+            <span class="subsection-index">02 /</span>
+            <h3 class="subsection-title">PODCASTS</h3>
+          </div>
+          <p class="subsection-desc">Conversations shaped through pacing, rhythm, and visual detail.</p>
+
+          <div class="video-grid">
+
+            <div class="video-cell reveal-on-scroll">
+              <div class="video-cell-index">01</div>
+              <div class="video-exhibition-frame aspect-16-9" data-motion-theme="podcast" data-duration="16" data-video-src="/assets/videos/podcast_01.mp4">
+                <canvas class="canvas-player" aria-label="Podcast 01"></canvas>
+                <div class="video-hud">
+                  <div class="hud-left">
+                    <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                    <span class="hud-timecode">TC 00:00:00:00</span>
+                  </div>
+                  <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                  <div class="hud-right">
+                    <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                    <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="video-cell reveal-on-scroll">
+              <div class="video-cell-index">02</div>
+              <div class="video-exhibition-frame aspect-16-9" data-motion-theme="podcast" data-duration="12" data-video-src="/assets/videos/podcast_02.mp4">
+                <canvas class="canvas-player" aria-label="Podcast 02"></canvas>
+                <div class="video-hud">
+                  <div class="hud-left">
+                    <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+                    <span class="hud-timecode">TC 00:00:00:00</span>
+                  </div>
+                  <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+                  <div class="hud-right">
+                    <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                    <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       05 — SHORT-FORM / SOCIAL
+       9:16 Vertical Precision
+       ====================================================================== -->
+  <section class="section-timeline-header" id="short-form">
+    <div class="canvas-container">
+
+      <div class="timeline-motif-bar">
+        <span class="timeline-sec-num">05 / SOCIAL</span>
+        <div class="timeline-scrubber-track">
+          <div class="timeline-scrubber-fill"></div>
+          <div class="timeline-scrubber-head"></div>
+        </div>
+      </div>
+
+      <div class="section-title-wrap">
+        <h2 class="section-heading">SHORT-FORM / SOCIAL</h2>
+        <p class="section-statement">Less time to say it. More intention behind every frame.</p>
+      </div>
+
+      <div class="section-body reels-grid-3col">
+
+        <!-- Reel 01 -->
+        <div class="exhibition-project reveal-on-scroll">
+          <div class="project-meta-top">
+            <span class="project-index">01 /</span>
+            <span class="project-timecode">EDITING · MOTION · RHYTHM</span>
+          </div>
+          <div class="video-exhibition-frame aspect-9-16" data-motion-theme="shortform" data-duration="8" data-video-src="/assets/videos/reel_01.mp4">
+            <canvas class="canvas-player" aria-label="Short-form Reel 01"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 02 -->
+        <div class="exhibition-project reveal-on-scroll">
+          <div class="project-meta-top">
+            <span class="project-index">02 /</span>
+            <span class="project-timecode">STORY · DESIGN · PACING</span>
+          </div>
+          <div class="video-exhibition-frame aspect-9-16" data-motion-theme="shortform" data-duration="9" data-video-src="/assets/videos/reel_02.mp4">
+            <canvas class="canvas-player" aria-label="Short-form Reel 02"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reel 03 -->
+        <div class="exhibition-project reveal-on-scroll">
+          <div class="project-meta-top">
+            <span class="project-index">03 /</span>
+            <span class="project-timecode">MOTION · TYPE · SOUND</span>
+          </div>
+          <div class="video-exhibition-frame aspect-9-16" data-motion-theme="shortform" data-duration="8" data-video-src="/assets/videos/reel_03.mp4">
+            <canvas class="canvas-player" aria-label="Short-form Reel 03"></canvas>
+            <div class="video-hud">
+              <div class="hud-left">
+                <button type="button" class="hud-play-btn" aria-label="Play or pause video">❚❚</button>
+              </div>
+              <div class="hud-timeline-progress" title="Scrub timeline"><div class="hud-timeline-bar"></div></div>
+              <div class="hud-right">
+                <button type="button" class="hud-audio-btn" aria-label="Toggle audio" aria-pressed="false">AUDIO OFF</button>
+                <button type="button" class="hud-expand-btn" aria-label="Expand video fullscreen">↗</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       09 — ABOUT
+       Statement + Bio + Process (No fake percentages)
+       ====================================================================== -->
+  <section class="about-section" id="about">
+    <div class="canvas-container">
+
+      <div class="about-grid">
+        <div class="about-label">
+          <span>09 / ABOUT</span>
+        </div>
+
+        <div class="about-content">
+          <h2 class="about-lead-statement">
+            “I like figuring out what a piece needs before deciding how it should look.”
+          </h2>
+
+          <p class="about-bio">
+            I’m Gaurav. I am a magician and my magic is to make people feel something with exciting visuals. Most of my work sits somewhere between storytelling and problem-solving, finding the right pace, the right frame, and knowing when to leave things alone.
+          </p>
+
+          <div class="capabilities-wrapper">
+            <div class="capabilities-header">WHAT I BRING TO THE PROCESS</div>
+            <ul class="capabilities-list">
+              <li class="capability-item">
+                <span>EDITING &amp; PACING</span>
+                <span class="capability-num mono">01</span>
+              </li>
+              <li class="capability-item">
+                <span>MOTION &amp; VISUAL LANGUAGE</span>
+                <span class="capability-num mono">02</span>
+              </li>
+              <li class="capability-item">
+                <span>STORY &amp; STRUCTURE</span>
+                <span class="capability-num mono">03</span>
+              </li>
+              <li class="capability-item">
+                <span>SOUND &amp; RHYTHM</span>
+                <span class="capability-num mono">04</span>
+              </li>
+              <li class="capability-item">
+                <span>CREATIVE DIRECTION</span>
+                <span class="capability-num mono">05</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       10 — CONTACT
+       "LET'S MAKE SOMETHING MOVE."
+       ====================================================================== -->
+  <section class="contact-section" id="contact">
+    <div class="canvas-container">
+
+      <div class="timeline-motif-bar" style="margin-bottom: var(--space-48);">
+        <span class="timeline-sec-num">10 / CONTACT</span>
+        <div class="timeline-scrubber-track">
+          <div class="timeline-scrubber-fill" style="width: 100%;"></div>
+          <div class="timeline-scrubber-head" style="left: 100%;"></div>
+        </div>
+      </div>
+
+      <h2 class="contact-hero-text">
+        LET'S MAKE<br>SOMETHING MOVE.
+      </h2>
+
+      <div class="contact-details-grid">
+        <div class="contact-bio-col">
+          <h3 class="contact-name">Gaurav</h3>
+          <p class="contact-role">Motion Designer / Creative Director</p>
+          <div class="contact-availability">
+            <span>Available for the right project.</span>
+          </div>
+        </div>
+
+        <div class="contact-links-col">
+          <a href="mailto:gauravkadamofficial37@gmail.com" class="contact-link-row">
+            <span class="contact-link-label">EMAIL</span>
+            <span class="contact-link-value">
+              <span class="contact-link-text">gauravkadamofficial37@gmail.com</span>
+              <span class="contact-link-arrow" aria-hidden="true">↗</span>
+            </span>
+          </a>
+          <a href="https://www.linkedin.com/in/gaurav-kadam-82a393322/" target="_blank" rel="noopener noreferrer" class="contact-link-row">
+            <span class="contact-link-label">LINKEDIN</span>
+            <span class="contact-link-value">
+              <span class="contact-link-text">LinkedIn</span>
+              <span class="contact-link-arrow" aria-hidden="true">↗</span>
+            </span>
+          </a>
+          <a href="https://www.instagram.com/gauravv.co/" target="_blank" rel="noopener noreferrer" class="contact-link-row">
+            <span class="contact-link-label">INSTAGRAM</span>
+            <span class="contact-link-value">
+              <span class="contact-link-text">Instagram</span>
+              <span class="contact-link-arrow" aria-hidden="true">↗</span>
+            </span>
+          </a>
+          <a href="https://x.com/Gaurav_rewired" target="_blank" rel="noopener noreferrer" class="contact-link-row">
+            <span class="contact-link-label">X</span>
+            <span class="contact-link-value">
+              <span class="contact-link-text">X / Twitter</span>
+              <span class="contact-link-arrow" aria-hidden="true">↗</span>
+            </span>
+          </a>
+          <a href="https://wa.me/919890749952" target="_blank" rel="noopener noreferrer" class="contact-link-row">
+            <span class="contact-link-label">WHATSAPP</span>
+            <span class="contact-link-value">
+              <span class="contact-link-text">+91 98907 49952</span>
+              <span class="contact-link-arrow" aria-hidden="true">↗</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <p class="contact-closing">Have something worth making? Let’s talk.</p>
+
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       11 — FOOTER
+       Colophon · "Made with too many timelines."
+       ====================================================================== -->
+  <footer class="site-footer">
+    <div class="canvas-container">
+      <div class="footer-inner">
+        <div class="footer-colophon">
+          <strong>GAURAV</strong>
+          <span>Creative Director / Motion Designer</span>
+          <span>© 2026</span>
+        </div>
+        <div class="footer-personality">
+          Made with too many timelines.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal for Fullscreen Media Viewing -->
+  <div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-modal="true" aria-label="Video Fullscreen Modal">
+    <div class="lightbox-container">
+      <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close modal">
+        <span>CLOSE</span>
+        <span aria-hidden="true">[ESC] ✕</span>
+      </button>
+      <video class="lightbox-media" id="lightbox-video" controls playsinline style="display: none;"></video>
+      <canvas class="lightbox-media" id="lightbox-canvas" width="1280" height="720"></canvas>
+    </div>
+  </div>
+
+  <!-- Custom Contextual Cursor (Desktop only) -->
+  <div class="custom-cursor" id="custom-cursor" aria-hidden="true">
+    <div class="cursor-disc">
+      <span class="cursor-label cursor-label-pause"><span class="cursor-icon">❚❚</span>PAUSE</span>
+      <span class="cursor-label cursor-label-play"><span class="cursor-icon">&#9654;&#xFE0E;</span>PLAY</span>
+    </div>
+  </div>
+
+  <!-- Main JavaScript Module Entry -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
