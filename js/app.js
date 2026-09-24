@@ -15,6 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const timelineController = new TimelineController();
   const cursor = new EditorialCursor();
 
+  // Hero first; then buffer the rest of the page's videos in the background.
+  // (Capped at 2.5s so a slow hero never holds everything else back.)
+  Promise.race([heroVideo.ready, new Promise(r => setTimeout(r, 2500))])
+    .then(() => videoEngine.beginPreloading());
+
   // Smooth Anchor Navigation
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {

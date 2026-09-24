@@ -10,23 +10,35 @@ export class TimelineController {
     this.siteNav = document.getElementById('site-nav');
     this.navLinks = document.querySelectorAll('.nav-link');
     this.backdrop = document.getElementById('cinematic-backdrop');
-    
+    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     this.initScrollListener();
     this.initIntersectionObserver();
   }
 
   initScrollListener() {
-    window.addEventListener('scroll', () => {
-      this.handleScroll();
-    }, { passive: true });
-    
+    // Coalesce scroll events into one update per animation frame
+    let queued = false;
+    const onScroll = () => {
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        this.handleScroll();
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
     this.handleScroll(); // Initial run
   }
 
   handleScroll() {
+    // Read everything first, then write (avoids forced layout on every scroll frame)
     const scrollY = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+    const playheads = this.measureSectionPlayheads();
 
     // Update Nav bar appearance
     if (this.siteNav) {
@@ -42,37 +54,41 @@ export class TimelineController {
       this.navProgressBar.style.width = `${scrollPercent.toFixed(1)}%`;
     }
 
-    // Subtle atmospheric backdrop parallax (20-30px over 1000px scroll)
-    if (this.backdrop) {
+    // Subtle atmospheric backdrop parallax (20-30px over 1000px scroll) — compositor-only transform
+    if (this.backdrop && !this.reducedMotion) {
       const parallaxY = scrollY * 0.025;
-      this.backdrop.style.setProperty('--scroll-parallax-y', `${parallaxY.toFixed(1)}px`);
+      this.backdrop.style.transform = `translate3d(0, ${parallaxY.toFixed(1)}px, 0)`;
     }
 
     // Update individual section playheads
-    this.updateSectionPlayheads();
+    playheads.forEach(({ fill, head, progress }) => {
+      fill.style.width = `${progress}%`;
+      head.style.left = `${progress}%`;
+    });
   }
 
-  updateSectionPlayheads() {
+  measureSectionPlayheads() {
     const windowH = window.innerHeight;
+    const updates = [];
 
     this.sections.forEach(sec => {
-      const rect = sec.getBoundingClientRect();
-      const scrubberFill = sec.querySelector('.timeline-scrubber-fill');
-      const scrubberHead = sec.querySelector('.timeline-scrubber-head');
-
+      const scrubberFill = sec._scrubFill || (sec._scrubFill = sec.querySelector('.timeline-scrubber-fill'));
+      const scrubberHead = sec._scrubHead || (sec._scrubHead = sec.querySelector('.timeline-scrubber-head'));
       if (!scrubberFill || !scrubberHead) return;
 
       // Calculate progress through section (0% to 100%)
+      const rect = sec.getBoundingClientRect();
       const secTop = rect.top;
       const secH = rect.height;
-      
+
       // If section is entering screen
       if (secTop < windowH && (secTop + secH) > 0) {
         const progress = Math.max(0, Math.min(100, ((windowH - secTop) / (windowH + secH)) * 100));
-        scrubberFill.style.width = `${progress}%`;
-        scrubberHead.style.left = `${progress}%`;
+        updates.push({ fill: scrubberFill, head: scrubberHead, progress });
       }
     });
+
+    return updates;
   }
 
   initIntersectionObserver() {

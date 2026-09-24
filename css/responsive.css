@@ -206,21 +206,15 @@
   .blob-primary {
     width: 110vw;
     height: 110vw;
-    filter: blur(70px);
-    -webkit-filter: blur(70px);
   }
 
   .blob-secondary {
     width: 90vw;
     height: 90vw;
-    filter: blur(60px);
-    -webkit-filter: blur(60px);
   }
 
   .hero-glow {
     width: 120vw;
-    filter: blur(60px);
-    -webkit-filter: blur(60px);
   }
 
   /* Video HUD always accessible on touch */

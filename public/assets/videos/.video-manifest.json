@@ -1,0 +1,92 @@
+{
+  "explainer_01.mp4": {
+    "master": {
+      "size": 6514872,
+      "mtimeMs": 1790197621971
+    }
+  },
+  "explainer_02.mp4": {
+    "master": {
+      "size": 9993589,
+      "mtimeMs": 1790197635127
+    }
+  },
+  "explainer_03.mp4": {
+    "master": {
+      "size": 6827513,
+      "mtimeMs": 1790197644563
+    }
+  },
+  "explainer_04.mp4": {
+    "master": {
+      "size": 8628228,
+      "mtimeMs": 1790197656995
+    }
+  },
+  "flagship_01.mp4": {
+    "master": {
+      "size": 17888708,
+      "mtimeMs": 1790197679105
+    }
+  },
+  "hero_bg.mp4": {
+    "master": {
+      "size": 3741597,
+      "mtimeMs": 1790197686940
+    }
+  },
+  "podcast_01.mp4": {
+    "master": {
+      "size": 25329191,
+      "mtimeMs": 1790197715572
+    }
+  },
+  "podcast_02.mp4": {
+    "master": {
+      "size": 18016072,
+      "mtimeMs": 1790197738089
+    }
+  },
+  "reel_01.mp4": {
+    "master": {
+      "size": 18029854,
+      "mtimeMs": 1790197768704
+    }
+  },
+  "reel_02.mp4": {
+    "master": {
+      "size": 14337822,
+      "mtimeMs": 1790197787678
+    }
+  },
+  "reel_03.mp4": {
+    "master": {
+      "size": 19124705,
+      "mtimeMs": 1790197817203
+    }
+  },
+  "vsl_01.mp4": {
+    "master": {
+      "size": 26800580,
+      "mtimeMs": 1790197845349
+    }
+  },
+  "vsl_02.mp4": {
+    "master": {
+      "size": 34678214,
+      "mtimeMs": 1790197885826
+    }
+  },
+  "vsl_03.mp4": {
+    "master": {
+      "size": 18675478,
+      "mtimeMs": 1790197907299
+    }
+  },
+  "vsl_04.mp4": {
+    "master": {
+      "size": 17789481,
+      "mtimeMs": 1790197935299
+    }
+  }
+}

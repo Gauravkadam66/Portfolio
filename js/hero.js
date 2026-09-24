@@ -69,8 +69,15 @@ export class HeroTypewriter {
 
 export class HeroBackgroundVideo {
   constructor() {
+    // Resolves once the hero has something on screen (or has given up), so the rest of the
+    // page's videos can start buffering without competing with it
+    this.ready = new Promise((resolve) => { this.resolveReady = resolve; });
+
     this.video = document.getElementById('hero-bg-video');
-    if (!this.video) return;
+    if (!this.video) {
+      this.resolveReady();
+      return;
+    }
     this.media = this.video.closest('.hero-media');
 
     // The <video> may already have failed/loaded before this module ran
@@ -84,6 +91,12 @@ export class HeroBackgroundVideo {
       this.markReady();
     } else {
       this.video.addEventListener('loadeddata', () => this.markReady(), { once: true });
+      // Poster (first frame) usually arrives before the video: show it right away
+      if (this.video.poster) {
+        const img = new Image();
+        img.onload = () => this.showPoster();
+        img.src = this.video.poster;
+      }
     }
 
     if (prefersReducedMotion()) {
@@ -109,14 +122,20 @@ export class HeroBackgroundVideo {
     }
   }
 
-  markReady() {
+  showPoster() {
     if (!this.video) return;
     this.video.classList.add('is-ready');
     if (this.media) this.media.classList.add('has-video');
   }
 
+  markReady() {
+    this.showPoster();
+    this.resolveReady();
+  }
+
   // Missing/unsupported file: remove the element so only the navy atmosphere remains
   fail() {
+    this.resolveReady();
     if (this.media) this.media.classList.remove('has-video');
     if (this.video) {
       this.video.removeAttribute('src');

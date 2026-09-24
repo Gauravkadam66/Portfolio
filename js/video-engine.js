@@ -10,19 +10,25 @@ export class VideoExhibitionEngine {
     this.activeLightboxPlayer = null;
     this.initObserver();
     this.initPlayers();
+    this.preloader = new PreloadQueue(this.players);
     this.bindEvents();
   }
 
+  // Called once the hero is up: start buffering the rest of the page in the background
+  beginPreloading() {
+    this.preloader.begin();
+  }
+
   initObserver() {
-    // Lazy-play: only animate/play when frame is in or near viewport
+    // Only decode what is actually on screen (buffering ahead is the PreloadQueue's job)
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const player = entry.target._playerInstance;
         if (player) player.setInView(entry.isIntersecting);
       });
     }, {
-      rootMargin: '150px 0px',
-      threshold: 0.15
+      rootMargin: '0px',
+      threshold: 0.2
     });
   }
 
@@ -33,8 +39,10 @@ export class VideoExhibitionEngine {
       const theme = frame.dataset.motionTheme || 'cinematic';
       const duration = parseFloat(frame.dataset.duration || '12'); // fallback duration
       const videoSrc = frame.dataset.videoSrc; // Path to real video file
-      
-      const player = new ExhibitionPlayer(frame, canvas, theme, duration, videoSrc, (p) => this.handleUnmute(p));
+      // Grid cards are small on screen: they autoplay the light 720p preview; Expand uses the full file
+      const usePreview = Boolean(frame.closest('.video-grid, .reels-grid-3col'));
+
+      const player = new ExhibitionPlayer(frame, canvas, theme, duration, videoSrc, usePreview, (p) => this.handleUnmute(p));
       frame._playerInstance = player;
       this.players.push(player);
       this.observer.observe(frame);
@@ -94,7 +102,8 @@ export class VideoExhibitionEngine {
       if (modalCanvas) modalCanvas.style.display = 'none';
       if (modalVideo) {
         modalVideo.style.display = 'block';
-        modalVideo.src = player.videoSrc;
+        modalVideo.poster = player.posterSrc || '';
+        modalVideo.src = player.videoSrc; // always the full-quality master
         modalVideo.currentTime = player.videoElement.currentTime;
         modalVideo.muted = false;
         modalVideo.play().catch(() => {});
@@ -143,8 +152,66 @@ export class VideoExhibitionEngine {
  * Seamlessly manages real HTML5 video files when present,
  * with automatic fallback to high-end procedural motion design simulations.
  */
+/**
+ * Background buffering: after the hero is ready, videos are preloaded in page order
+ * (2 at a time, 1 on slow connections) so they're ready before the visitor scrolls to them.
+ * Anything within ~1.5 screens of the viewport jumps the queue.
+ */
+class PreloadQueue {
+  constructor(players) {
+    const conn = navigator.connection || {};
+    // Data saver / slow networks: only buffer what the visitor is about to reach
+    this.lowBandwidth = Boolean(conn.saveData) || /(^|-)2g$|^3g$/.test(conn.effectiveType || '');
+    this.concurrency = this.lowBandwidth ? 1 : 2;
+    this.pending = players.filter(p => p.canPreload());
+    this.active = 0;
+    this.started = false;
+
+    if ('IntersectionObserver' in window) {
+      this.nearObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) this.prioritize(entry.target._playerInstance);
+        });
+      }, { rootMargin: '150% 0px' });
+      this.pending.forEach(p => this.nearObserver.observe(p.container));
+    }
+  }
+
+  begin() {
+    if (this.started) return;
+    this.started = true;
+    this.pump();
+  }
+
+  prioritize(player) {
+    if (!player || !this.pending.includes(player)) return;
+    this.pending = this.pending.filter(p => p !== player);
+    if (this.started) {
+      this.run(player); // close to the viewport: start now, even beyond the concurrency limit
+    } else {
+      this.pending.unshift(player); // hero still loading: go first once it's done
+    }
+  }
+
+  pump() {
+    if (!this.started || this.lowBandwidth) return;
+    while (this.active < this.concurrency && this.pending.length) {
+      this.run(this.pending.shift());
+    }
+  }
+
+  run(player) {
+    if (this.nearObserver) this.nearObserver.unobserve(player.container);
+    this.active++;
+    player.preload().finally(() => {
+      this.active--;
+      this.pump();
+    });
+  }
+}
+
 class ExhibitionPlayer {
-  constructor(container, canvas, theme, duration, videoSrc, onUnmute) {
+  constructor(container, canvas, theme, duration, videoSrc, usePreview, onUnmute) {
     this.container = container;
     this.canvas = canvas;
     this.theme = theme;
@@ -152,9 +219,21 @@ class ExhibitionPlayer {
     this.videoSrc = videoSrc;
     this.hasRealVideo = Boolean(videoSrc);
     this.isVideoLoaded = false;
+    this.videoFailed = false;
+    this.loadRequested = false;
+    this.preloadState = 'idle';
     this.videoElement = null;
     this.canvasPlayer = null;
     this.onUnmute = onUnmute;
+
+    // Derived from the master filename: /assets/videos/x.mp4 → previews/x.mp4 + posters/x.jpg
+    if (this.hasRealVideo) {
+      const slash = videoSrc.lastIndexOf('/');
+      const dir = videoSrc.slice(0, slash);
+      const file = videoSrc.slice(slash + 1);
+      this.posterSrc = `${dir}/posters/${file.replace(/\.[^.]+$/, '.jpg')}`;
+      this.previewSrc = usePreview ? `${dir}/previews/${file}` : null;
+    }
 
     this.currentTime = 0;
     this.isPaused = true;      // actual playback state
@@ -187,24 +266,24 @@ class ExhibitionPlayer {
   setupRealVideo() {
     const video = document.createElement('video');
     video.className = 'exhibition-video';
-    video.src = this.videoSrc;
     video.playsInline = true;
     video.loop = true;
     video.muted = true;
-    video.preload = 'metadata';
+    // Nothing downloads until the PreloadQueue or the viewport asks for it
+    video.preload = 'none';
+    video.poster = this.posterSrc; // first frame appears instantly, never a black box
+    video.src = this.previewSrc || this.videoSrc;
     video.style.position = 'absolute';
     video.style.inset = '0';
     video.style.width = '100%';
     video.style.height = '100%';
     video.style.objectFit = 'cover';
-    video.style.display = 'none';
+    if (this.canvas) this.canvas.style.display = 'none';
 
     video.addEventListener('canplay', () => {
+      this.container.classList.remove('is-buffering');
       if (this.isVideoLoaded) return; // canplay re-fires after every seek
       this.isVideoLoaded = true;
-      video.style.display = 'block';
-      if (this.canvas) this.canvas.style.display = 'none';
-      if (this.canvasPlayer) this.canvasPlayer.pause();
       if (this.hudAudioBtn) this.hudAudioBtn.hidden = false;
       this.totalDuration = video.duration || this.totalDuration;
       if (!this.isPaused) {
@@ -212,14 +291,29 @@ class ExhibitionPlayer {
       }
     });
 
+    // Subtle buffering state (CSS delays it so quick hiccups never flash)
+    video.addEventListener('waiting', () => {
+      if (!this.isPaused) this.container.classList.add('is-buffering');
+    });
+    video.addEventListener('playing', () => this.container.classList.remove('is-buffering'));
+
     video.addEventListener('timeupdate', () => {
       this.currentTime = video.currentTime;
       this.updateHUD();
     });
 
     video.addEventListener('error', () => {
-      // Graceful fallback to procedural canvas if video not yet uploaded or 404
+      // Preview missing (e.g. `npm run videos` not run yet) → fall back to the full file
+      if (this.previewSrc && video.getAttribute('src') === this.previewSrc) {
+        video.src = this.videoSrc;
+        if (this.loadRequested) video.load();
+        if (!this.isPaused) video.play().catch(() => {});
+        return;
+      }
+      // No video at all → graceful procedural canvas placeholder
+      this.videoFailed = true;
       this.isVideoLoaded = false;
+      this.container.classList.remove('is-buffering');
       video.style.display = 'none';
       if (this.hudAudioBtn) this.hudAudioBtn.hidden = true;
       if (this.canvas) this.canvas.style.display = 'block';
@@ -230,6 +324,40 @@ class ExhibitionPlayer {
 
     this.container.prepend(video);
     this.videoElement = video;
+  }
+
+  canPreload() {
+    return Boolean(this.videoElement);
+  }
+
+  // Buffer ahead without playing. Resolves once the browser has enough to play through
+  // (or pauses downloading on its own), so the queue can move on.
+  preload() {
+    const video = this.videoElement;
+    if (!video || this.videoFailed || this.preloadState !== 'idle') return Promise.resolve();
+    this.preloadState = 'loading';
+
+    return new Promise((resolve) => {
+      const events = ['canplaythrough', 'suspend', 'error'];
+      const finish = () => {
+        clearTimeout(timer);
+        events.forEach(ev => video.removeEventListener(ev, finish));
+        this.preloadState = 'done';
+        resolve();
+      };
+      const timer = setTimeout(finish, 20000);
+
+      if (video.readyState >= 4) {
+        finish();
+        return;
+      }
+      events.forEach(ev => video.addEventListener(ev, finish));
+      video.preload = 'auto';
+      if (!this.loadRequested) {
+        this.loadRequested = true;
+        video.load();
+      }
+    });
   }
 
   bindHUDControls() {
@@ -335,7 +463,9 @@ class ExhibitionPlayer {
 
   start() {
     this.isPaused = false;
-    if (this.isVideoLoaded && this.videoElement) {
+    if (this.videoElement && !this.videoFailed) {
+      // play() also kicks off loading if the queue hasn't reached this video yet
+      this.loadRequested = true;
       this.videoElement.play().catch(() => {});
     } else if (this.canvasPlayer) {
       this.canvasPlayer.play();
@@ -345,6 +475,7 @@ class ExhibitionPlayer {
 
   stop() {
     this.isPaused = true;
+    this.container.classList.remove('is-buffering');
     if (this.videoElement) this.videoElement.pause();
     if (this.canvasPlayer) this.canvasPlayer.pause();
     this.syncPlayState();

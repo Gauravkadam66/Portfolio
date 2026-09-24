@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host --port 5173",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "videos": "node scripts/prepare-videos.mjs"
   },
   "devDependencies": {
     "vite": "^6.2.0"

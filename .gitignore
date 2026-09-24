@@ -14,3 +14,7 @@ Thumbs.db
 
 # Vercel
 .vercel
+
+# Original, uncompressed video backups (made by npm run videos)
+video_originals/
+*.tmp.jpg
