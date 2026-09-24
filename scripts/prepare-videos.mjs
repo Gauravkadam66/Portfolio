@@ -20,6 +20,7 @@
  */
 
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readdirSync, readFileSync, renameSync, statSync, writeFileSync, copyFileSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -41,11 +42,12 @@ const NO_PREVIEW = (name) => name.startsWith('hero') || name.startsWith('flagshi
 for (const dir of [previewsDir, postersDir, backupDir]) mkdirSync(dir, { recursive: true });
 
 const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : {};
-const fingerprint = (file) => {
-  const s = statSync(file);
-  return { size: s.size, mtimeMs: Math.round(s.mtimeMs) };
-};
-const sameFingerprint = (a, b) => a && b && a.size === b.size && a.mtimeMs === b.mtimeMs;
+// Content hash (not modified-time) so a fresh clone on another machine doesn't re-compress everything
+const fingerprint = (file) => ({
+  size: statSync(file).size,
+  sha1: createHash('sha1').update(readFileSync(file)).digest('hex'),
+});
+const sameFingerprint = (a, b) => a && b && a.size === b.size && a.sha1 === b.sha1;
 
 const ffmpeg = (argv) => execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', ...argv], { stdio: 'inherit' });
 const hasAudio = (file) =>
