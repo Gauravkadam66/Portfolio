@@ -241,15 +241,26 @@ button {
   z-index: 1000;
   padding: var(--space-24) 0;
   transition: background-color var(--transition-fast), padding var(--transition-fast), border-color var(--transition-fast);
-  background-color: rgba(5, 8, 18, 0.82);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-subtle);
+  /* Frosted, dimmed glass: content stays visible through it, text stays readable on top */
+  background-color: rgba(5, 8, 18, 0.42);
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0));
+  backdrop-filter: blur(20px) saturate(140%) brightness(0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(140%) brightness(0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .site-nav.is-scrolled {
   padding: var(--space-16) 0;
+  background-color: rgba(5, 8, 18, 0.5);
   border-bottom: 1px solid var(--border-muted);
+}
+
+/* Browsers without backdrop-filter: fall back to a solid-enough bar for legibility */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-nav,
+  .site-nav.is-scrolled {
+    background-color: rgba(5, 8, 18, 0.9);
+  }
 }
 
 .nav-inner {
@@ -854,12 +865,46 @@ button {
   border-radius: var(--radius-xs);
   cursor: pointer;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-  transition: transform var(--transition-med), border-color var(--transition-med);
+  transition:
+    transform 650ms var(--ease-editorial),
+    border-color 650ms var(--ease-editorial),
+    box-shadow 650ms var(--ease-editorial),
+    opacity 650ms var(--ease-editorial);
 }
 
 .video-exhibition-frame:hover {
   transform: translateY(-2px);
   border-color: var(--border-muted);
+}
+
+/* --- Audio focus: the unmuted video glows and steps forward; its grid neighbours step back.
+       Transforms only, so the grid, labels and hairlines never move. --- */
+.video-exhibition-frame.is-audio-active {
+  transform: scale(1.03);
+  border-color: rgba(80, 100, 161, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(80, 100, 161, 0.35),
+    0 12px 48px rgba(62, 78, 128, 0.42),
+    0 0 110px rgba(30, 44, 110, 0.55);
+  z-index: 3;
+}
+
+.video-exhibition-frame.is-audio-active:hover {
+  transform: translateY(-2px) scale(1.03);
+}
+
+/* Large single frame (flagship) needs less growth to read the same */
+.exhibition-project:not(.reels-grid-3col > *) > .video-exhibition-frame.is-audio-active {
+  transform: scale(1.015);
+}
+
+.exhibition-project:not(.reels-grid-3col > *) > .video-exhibition-frame.is-audio-active:hover {
+  transform: translateY(-2px) scale(1.015);
+}
+
+.has-audio-focus .video-exhibition-frame:not(.is-audio-active) {
+  transform: scale(0.97);
+  opacity: 0.72;
 }
 
 /* Aspect Ratios */

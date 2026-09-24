@@ -217,9 +217,7 @@
     width: 120vw;
   }
 
-  /* Video HUD always accessible on touch */
   .video-hud {
-    opacity: 1;
     padding: var(--space-12) var(--space-16);
     background: linear-gradient(to top, rgba(3, 5, 11, 0.90) 0%, rgba(3, 5, 11, 0) 100%);
   }
@@ -243,13 +241,40 @@
 }
 
 /* --------------------------------------------------------------------------
-   Touch devices of any width: no hover, so keep controls visible and seek bar thicker
+   Touch devices (phones, tablets): controls are fully visible while paused. Once playing they
+   hold for a moment, then dissolve away (opacity + blur + slight drift) so the picture is clean.
+   Tapping the video pauses it and brings them straight back.
    -------------------------------------------------------------------------- */
-@media (hover: none) {
-  .video-hud {
-    opacity: 1;
+@media (hover: none), (pointer: coarse) {
+  .video-exhibition-frame .video-hud,
+  .video-exhibition-frame:hover .video-hud {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(6px);
+    /* visibility flips only once the fade has finished, so the controls stay tappable while visible */
+    visibility: hidden;
+    transition:
+      opacity 900ms var(--ease-editorial) 1400ms,
+      filter 900ms var(--ease-editorial) 1400ms,
+      transform 900ms var(--ease-editorial) 1400ms,
+      visibility 0s linear 2300ms;
   }
 
+  .video-exhibition-frame.is-paused .video-hud,
+  .video-exhibition-frame.is-paused:hover .video-hud {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+      opacity 350ms var(--ease-editorial),
+      filter 350ms var(--ease-editorial),
+      transform 350ms var(--ease-editorial),
+      visibility 0s;
+  }
+}
+
+@media (hover: none) {
   .hud-timeline-progress {
     height: 3px;
   }

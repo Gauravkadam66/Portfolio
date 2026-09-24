@@ -431,6 +431,13 @@ class ExhibitionPlayer {
       this.hudAudioBtn.textContent = muted ? 'AUDIO OFF' : 'AUDIO ON';
       this.hudAudioBtn.setAttribute('aria-pressed', (!muted).toString());
     }
+
+    // Audio focus: glow + step forward on this frame, neighbours in the same grid step back
+    this.container.classList.toggle('is-audio-active', !muted);
+    const group = this.container.closest('.video-grid, .reels-grid-3col');
+    if (group) {
+      group.classList.toggle('has-audio-focus', Boolean(group.querySelector('.is-audio-active')));
+    }
   }
 
   // Visibility-driven playback: never overrides an explicit user pause
