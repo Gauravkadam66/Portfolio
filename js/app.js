@@ -2,10 +2,14 @@
  * MAIN APP INITIALIZER — GAURAV PORTFOLIO
  */
 
+import { inject } from '@vercel/analytics';
 import { VideoExhibitionEngine } from './video-engine.js';
 import { TimelineController } from './timeline-controller.js';
 import { EditorialCursor } from './cursor.js';
 import { HeroTypewriter, HeroBackgroundVideo } from './hero.js';
+
+// Initialize Vercel Analytics
+inject();
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Core Systems
