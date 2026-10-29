@@ -79,9 +79,6 @@
         <div class="hero-status-pill">
           <span>AVAILABLE FOR THE RIGHT PROJECT</span>
         </div>
-        <div class="hero-origin mono">
-          BASED IN INDIA · WORKING WORLDWIDE
-        </div>
       </div>
 
       <!-- Main Typography Hierarchy -->
@@ -522,59 +519,52 @@
 
   <!-- ======================================================================
        ABOUT — "The person behind the pixels."
-       Photos live in public/assets/photos/ (see README.md there). Any photo that
-       is missing is simply left out and the layout closes up around it.
+       Photographs are configured right here, in the photo-focus gallery below:
+       one <button class="pf-panel"> per photo (src, alt, caption, crop focus).
+       Files live in public/assets/photos/ (see README.md there). A photo that
+       fails to load is removed and the gallery re-balances around the rest.
        ====================================================================== -->
   <section class="about-section" id="about">
     <div class="canvas-container">
 
-      <h2 class="about-headline reveal-rise">The person behind the pixels.</h2>
+      <div class="about-intro">
+        <h2 class="about-headline reveal-rise">The person behind the pixels.</h2>
+        <p class="about-lede reveal-rise" style="--reveal-delay: 120ms">
+          I spend my days turning ideas into things people can feel, mostly through video editing and motion design, where the real work is storytelling and solving the creative problem in front of me. Outside of that, I’m probably making music, chasing a new obsession, or trying to get better at something nobody asked me to.
+        </p>
+      </div>
 
-      <div class="about-layout" data-about>
-
-        <!-- Primary photograph (tall). Captions are editable copy. -->
-        <figure class="about-photo about-photo--primary reveal-mask" data-about-photo="primary">
-          <div class="about-photo-frame" data-parallax>
-            <img src="/assets/photos/about-main.jpg" alt="Gaurav at his desk at night, headphones on, a motion-design timeline open on the monitor" loading="lazy" decoding="async" style="object-position: 50% 68%">
-          </div>
-          <figcaption>Most of the job happens here, usually after dark.</figcaption>
-        </figure>
-
-        <div class="about-column">
-          <p class="about-lede reveal-rise">
-            I spend my days turning ideas into things people can feel, mostly through video editing and motion design, where the real work is storytelling and solving the creative problem in front of me. Outside of that, I’m probably making music, chasing a new obsession, or trying to get better at something nobody asked me to.
-          </p>
-
-          <!-- Supporting photograph (landscape) -->
-          <figure class="about-photo about-photo--support reveal-mask" style="--reveal-delay: 120ms" data-about-photo>
-            <div class="about-photo-frame">
-              <img src="/assets/photos/about-02.jpg" alt="Gaurav in a headset on a video call with his team, a laptop open beside the monitor" loading="lazy" decoding="async" style="object-position: 12% 50%">
-            </div>
-            <figcaption>Not all of it is solo. Some of it is a lot of faces on one screen.</figcaption>
-          </figure>
-
-          <div class="about-offclock">
-            <!-- Small candid detail -->
-            <figure class="about-photo about-photo--detail reveal-mask" style="--reveal-delay: 220ms" data-about-photo>
-              <div class="about-photo-frame">
-                <img src="/assets/photos/about-03.jpg" alt="Gaurav&#39;s desk: an edit in progress on the main monitor, posters on the wall above" loading="lazy" decoding="async" style="object-position: 18% 55%">
-              </div>
-            </figure>
-
-            <div class="about-notes">
-              <p class="about-note reveal-rise" style="--reveal-delay: 160ms">
-                Somewhere on my drive: over 150 songs that have never left it.
-                <button type="button" class="about-note-action" data-music-trigger hidden>Hear one</button>
-              </p>
-              <p class="about-note about-note--osu reveal-rise" style="--reveal-delay: 240ms">
-                I edit frames for a living. I chase
-                <button type="button" class="osu-hit" aria-label="circles (osu! easter egg)"><span class="osu-hit-word">circles</span><span class="osu-hit-circle" aria-hidden="true"><span class="osu-hit-approach"></span></span></button>
-                for fun.
-                <span class="about-note-aside">osu!, if you’re wondering.</span>
-              </p>
-            </div>
-          </div>
+      <!-- Three-photo focus gallery: one sharp in the middle, two blurred either side.
+           Select a side photo (click, tap, swipe or ← →) to bring it into focus. -->
+      <div class="photo-focus reveal-rise" data-photo-focus role="region" aria-roledescription="carousel" aria-label="Photographs of Gaurav at work">
+        <div class="pf-stage" data-pf-stage>
+          <button type="button" class="pf-panel" data-pf-panel data-caption="Most of the job happens here, usually after dark.">
+            <img src="/assets/photos/about-main.jpg" alt="Gaurav at his desk at night, headphones on, a motion-design timeline open on the monitor" loading="lazy" decoding="async" style="object-position: 50% 70%">
+          </button>
+          <button type="button" class="pf-panel" data-pf-panel data-caption="Behind the final frame.">
+            <img src="/assets/photos/about-02.jpg" alt="Gaurav&#39;s desk: an edit in progress on the main monitor, posters on the wall above" loading="lazy" decoding="async" style="object-position: 30% 55%">
+          </button>
+          <button type="button" class="pf-panel" data-pf-panel data-caption="Not all of it is solo. Some of it is a lot of faces on one screen.">
+            <img src="/assets/photos/about-03.jpg" alt="Gaurav in a headset on a video call with his team, a laptop open beside the monitor" loading="lazy" decoding="async" style="object-position: 22% 45%">
+          </button>
         </div>
+        <div class="pf-footer">
+          <p class="pf-caption" data-pf-caption aria-live="polite"></p>
+          <p class="pf-meta"><span class="pf-hint">Select a photo to bring it into focus</span><span class="pf-count" data-pf-count></span></p>
+        </div>
+      </div>
+
+      <div class="about-notes">
+        <p class="about-note reveal-rise">
+          Somewhere on my drive: over 150 songs that have never left it.
+          <a href="#music" class="about-note-action" data-music-open hidden>Open the player</a>
+        </p>
+        <p class="about-note about-note--osu reveal-rise" style="--reveal-delay: 100ms">
+          I edit frames for a living. I chase
+          <button type="button" class="osu-hit" aria-label="circles (osu! easter egg)"><span class="osu-hit-word">circles</span><span class="osu-hit-circle" aria-hidden="true"><span class="osu-hit-approach"></span></span></button>
+          for fun.
+          <span class="about-note-aside">osu!, if you’re wondering.</span>
+        </p>
       </div>
 
       <!-- How I work (kept from the previous About; numbers removed) -->
@@ -592,6 +582,135 @@
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       MUSIC — a closed panel in the page flow that opens into a 3-track player.
+       Tracks are configured on each <li class="ms-card"> below:
+         data-src        audio file (public/assets/audio/tracks/…)
+         data-title / data-mood   text on the card
+         data-art        optional artwork image; without it the card uses its own type-led art
+         data-drop-note  seconds — shows "If you just want the drop, skip to 0:47." when its play is pressed
+       A track whose file is missing is left out; with none available the section stays hidden.
+       Nothing ever autoplays.
+       ====================================================================== -->
+  <section class="music-section" id="music" data-music hidden>
+    <div class="canvas-container">
+      <div class="music-panel" data-music-panel>
+
+        <div class="music-head">
+          <button type="button" class="music-toggle" data-music-toggle aria-expanded="false" aria-controls="music-body">
+            <span class="music-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+            </span>
+            <span class="music-head-text">
+              <span class="music-title">A little something to listen to.</span>
+              <span class="music-sub" data-music-sub>Three sounds. Three different moods.</span>
+            </span>
+            <span class="music-cue"><span class="music-cue-open">Open music player</span><span class="music-cue-close">Close player</span><span class="music-chevron" aria-hidden="true"></span></span>
+          </button>
+          <!-- Shown only while the panel is closed and a track is playing: pause without reopening -->
+          <button type="button" class="music-mini-pause" data-music-mini hidden aria-label="Pause music">
+            <span class="ms-eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+            <span class="music-mini-label">Pause</span>
+          </button>
+        </div>
+
+        <div class="music-body" id="music-body" data-music-body inert>
+          <div class="music-body-inner">
+
+            <div class="ms-stage" data-ms-stage>
+              <ul class="ms-cards" data-ms-cards aria-label="Tracks">
+                <li class="ms-card ms-card--edm" data-ms-card
+                    data-src="/assets/audio/tracks/edm.mp3"
+                    data-title="EDM"
+                    data-mood="Loud, bright, fast."
+                    data-art="">
+                  <button type="button" class="ms-card-select" data-ms-select>
+                    <span class="ms-art" aria-hidden="true"><span class="ms-art-type">EDM</span></span>
+                    <span class="ms-card-title">EDM</span>
+                    <span class="ms-card-mood">Loud, bright, fast.</span>
+                  </button>
+                  <button type="button" class="ms-card-play" data-ms-play aria-label="Play EDM"><span class="ms-play-icon" aria-hidden="true"></span></button>
+                </li>
+                <li class="ms-card ms-card--weeknd" data-ms-card
+                    data-src="/assets/audio/tracks/the-weeknd.mp3"
+                    data-title="The Weeknd"
+                    data-mood="Dark, late-night pop."
+                    data-art=""
+                    data-drop-note="47">
+                  <button type="button" class="ms-card-select" data-ms-select>
+                    <span class="ms-art" aria-hidden="true"><span class="ms-art-type">The<br>Weeknd</span></span>
+                    <span class="ms-card-title">The Weeknd</span>
+                    <span class="ms-card-mood">Dark, late-night pop.</span>
+                  </button>
+                  <button type="button" class="ms-card-play" data-ms-play aria-label="Play The Weeknd"><span class="ms-play-icon" aria-hidden="true"></span></button>
+                </li>
+                <li class="ms-card ms-card--classical" data-ms-card
+                    data-src="/assets/audio/tracks/classical.mp3"
+                    data-title="Classical"
+                    data-mood="Slow and patient."
+                    data-art="">
+                  <button type="button" class="ms-card-select" data-ms-select>
+                    <span class="ms-art" aria-hidden="true"><span class="ms-art-type">Classical</span></span>
+                    <span class="ms-card-title">Classical</span>
+                    <span class="ms-card-mood">Slow and patient.</span>
+                  </button>
+                  <button type="button" class="ms-card-play" data-ms-play aria-label="Play Classical"><span class="ms-play-icon" aria-hidden="true"></span></button>
+                </li>
+              </ul>
+
+              <!-- Contextual note for the track with data-drop-note (The Weeknd) -->
+              <div class="ms-note" data-ms-note hidden>
+                <p>If you just want the drop, skip to <button type="button" class="ms-note-seek" data-ms-note-seek>0:47</button>.</p>
+                <button type="button" class="ms-note-close" data-ms-note-close aria-label="Dismiss note">✕</button>
+              </div>
+            </div>
+
+            <div class="ms-bar" data-ms-bar>
+              <div class="ms-transport">
+                <button type="button" class="ms-btn" data-ms-prev aria-label="Previous track"><span class="ms-ico ms-ico--prev" aria-hidden="true"></span></button>
+                <button type="button" class="ms-btn ms-btn--main" data-ms-toggle aria-label="Play"><span class="ms-play-icon" aria-hidden="true"></span></button>
+                <button type="button" class="ms-btn" data-ms-next aria-label="Next track"><span class="ms-ico ms-ico--next" aria-hidden="true"></span></button>
+              </div>
+
+              <div class="ms-now">
+                <span class="ms-now-art" data-ms-now-art aria-hidden="true"></span>
+                <span class="ms-now-text">
+                  <span class="ms-now-title" data-ms-now-title></span>
+                  <span class="ms-now-mood" data-ms-now-mood></span>
+                </span>
+              </div>
+
+              <div class="ms-timeline">
+                <span class="ms-time" data-ms-elapsed>0:00</span>
+                <div class="ms-wave" data-ms-wave>
+                  <!-- Decorative waveform (generated, not the real amplitude). The range on top is the real, seekable timeline. -->
+                  <div class="ms-wave-bars" data-ms-bars aria-hidden="true"></div>
+                  <div class="ms-wave-bars ms-wave-bars--played" data-ms-bars-played aria-hidden="true"></div>
+                  <input type="range" class="ms-seek" data-ms-seek min="0" max="1000" step="1" value="0" aria-label="Seek" disabled>
+                </div>
+                <span class="ms-time" data-ms-duration>0:00</span>
+              </div>
+
+              <div class="ms-volume">
+                <button type="button" class="ms-btn" data-ms-mute aria-label="Mute" aria-pressed="false">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M2.5 6h2.5l3.5-3v10l-3.5-3H2.5z" fill="currentColor" stroke="none"/>
+                    <path class="ms-waves" d="M10.8 5.6a3.2 3.2 0 0 1 0 4.8M12.6 3.8a5.8 5.8 0 0 1 0 8.4"/>
+                    <path class="ms-slash" d="M10.5 5.5l4 5M14.5 5.5l-4 5"/>
+                  </svg>
+                </button>
+                <input type="range" class="ms-vol" data-ms-vol min="0" max="100" value="85" aria-label="Volume">
+              </div>
+            </div>
+
+            <p class="ms-status" data-ms-status role="status"></p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -697,30 +816,11 @@
     </div>
   </div>
 
-  <!-- Music player — OFF by default, never autoplays.
-       Track: public/assets/audio/music.mp3 (change data-src / data-title to swap it).
-       Stays hidden unless that file actually exists. -->
-  <div class="music-player" id="music-player" data-src="/assets/audio/music.mp3" data-title="Original music by Gaurav" data-state="off" hidden>
-    <div class="mp-seek-wrap">
-      <input type="range" class="mp-seek" min="0" max="1000" step="1" value="0" aria-label="Seek music" disabled>
-    </div>
-    <button type="button" class="mp-toggle" aria-label="Play Gaurav's music">
-      <span class="mp-icon" aria-hidden="true"></span>
-      <span class="mp-text" aria-hidden="true">
-        <span class="mp-label">Sound off · <span class="mp-hint-desktop">click</span><span class="mp-hint-touch">tap</span> to listen</span>
-        <span class="mp-eq"><i></i><i></i><i></i><i></i></span>
-      </span>
-    </button>
-    <span class="mp-time" aria-hidden="true"><span class="mp-elapsed">0:00</span> / <span class="mp-duration">0:00</span></span>
-    <button type="button" class="mp-mute" aria-label="Mute music" aria-pressed="false">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M2.5 6h2.5l3.5-3v10l-3.5-3H2.5z" fill="currentColor" stroke="none"/>
-        <path class="mp-waves" d="M10.8 5.6a3.2 3.2 0 0 1 0 4.8M12.6 3.8a5.8 5.8 0 0 1 0 8.4"/>
-        <path class="mp-slash" d="M10.5 5.5l4 5M14.5 5.5l-4 5"/>
-      </svg>
-    </button>
-    <span class="sr-only" aria-live="polite" data-mp-status></span>
-  </div>
+  <!-- Floating contact CTA — fixed bottom-right; hides itself once Contact is on screen -->
+  <a href="#contact" class="contact-cta" data-contact-cta aria-label="Let's talk: jump to contact details">
+    <span class="contact-cta-label">Let’s talk</span>
+    <span class="contact-cta-arrow" aria-hidden="true">↓</span>
+  </a>
 
   <!-- Custom Contextual Cursor (Desktop only) -->
   <div class="custom-cursor" id="custom-cursor" aria-hidden="true">

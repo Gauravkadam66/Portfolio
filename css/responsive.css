@@ -73,36 +73,31 @@
     margin-bottom: var(--space-32);
   }
 
-  .about-layout,
+  .about-intro,
   .about-process {
     grid-template-columns: 1fr;
-    row-gap: var(--space-48);
+    row-gap: var(--space-32);
   }
 
-  .about-photo--primary,
-  .about-column,
-  .about-layout.no-primary .about-column,
   .about-process-quote,
   .about-process-list-wrap {
     grid-column: 1 / -1;
   }
 
-  /* One column: words first, then the photographs */
-  .about-column {
-    display: contents;
-  }
-
-  .about-lede { order: 1; }
-  .about-photo--primary { order: 2; }
-  .about-photo--support { order: 3; }
-  .about-offclock { order: 4; }
-
-  .about-photo--primary .about-photo-frame {
-    aspect-ratio: 4 / 4.6;
-  }
-
   .about-process {
     margin-top: var(--space-128);
+    row-gap: var(--space-48);
+  }
+
+  /* Music: bar wraps onto two rows */
+  .ms-bar {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas:
+      "transport now volume"
+      "timeline timeline timeline";
+    row-gap: var(--space-12);
+    border-radius: 24px;
+    padding: 12px 16px;
   }
 }
 
@@ -317,6 +312,120 @@
 }
 
 /* --------------------------------------------------------------------------
+   Phones (<= 600px): gallery, music and contact button sized for thumbs
+   -------------------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .about-notes {
+    grid-template-columns: 1fr;
+    margin-top: var(--space-64);
+  }
+
+  /* Selected photo takes most of the width; slivers either side stay tappable */
+  .pf-stage {
+    --gap: 8px;
+    --side: 13%;
+    height: clamp(340px, 110vw, 480px);
+  }
+
+  .pf-stage[data-count] .pf-panel:not([data-slot="active"])::after {
+    width: 30px;
+    height: 30px;
+    margin: -15px 0 0 -15px;
+    font-size: 0.8rem;
+  }
+
+  .pf-footer {
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .pf-hint {
+    display: none;
+  }
+
+  .music-toggle {
+    flex-wrap: wrap;
+    gap: var(--space-16);
+    padding: var(--space-12);
+  }
+
+  .music-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .music-head-text {
+    flex-basis: calc(100% - 64px);
+  }
+
+  .music-cue {
+    width: 100%;
+    padding-left: 64px;
+  }
+
+  .music-head {
+    flex-wrap: wrap;
+  }
+
+  .music-mini-pause {
+    margin: 0 var(--space-12) var(--space-12) auto;
+  }
+
+  /* Cards: smaller, flat peeks either side (swipe or tap them) */
+  .ms-stage {
+    padding: var(--space-16) 0 0;
+    overflow: hidden;
+  }
+
+  .ms-cards {
+    --w: min(62vw, 220px);
+  }
+
+  .ms-card[data-slot="prev"] {
+    transform: translateX(-80%) scale(0.8);
+  }
+
+  .ms-card[data-slot="next"] {
+    transform: translateX(80%) scale(0.8);
+  }
+
+  .ms-bar {
+    margin: var(--space-16) var(--space-12) 0;
+    gap: var(--space-8);
+  }
+
+  .ms-now {
+    padding-right: 8px;
+  }
+
+  .ms-vol {
+    display: none;
+  }
+
+  .contact-cta {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    height: 44px;
+    padding: 0 16px;
+  }
+}
+
+/* Narrow phones: transport row on its own so nothing gets squeezed */
+@media (max-width: 400px) {
+  .ms-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "now volume"
+      "timeline timeline"
+      "transport transport";
+  }
+
+  .ms-transport {
+    justify-content: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Accessibility: prefers-reduced-motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
@@ -356,14 +465,15 @@
     clip-path: none !important;
   }
 
-  /* Static equalizer bars, no parallax */
-  .mp-eq i {
+  /* Static equalizer bars; the contact button stops breathing */
+  .ms-eq i {
     animation: none !important;
     transform: scaleY(0.7);
   }
 
-  .about-photo-frame.has-parallax img {
-    transform: none !important;
+  .contact-cta::before {
+    animation: none !important;
+    opacity: 0 !important;
   }
 
   .scroll-prompt-arrow {

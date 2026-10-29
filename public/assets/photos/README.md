@@ -1,20 +1,28 @@
-# About-section photos
+# About-section photos (three-photo focus gallery)
 
-Drop your working photographs here using these exact names. Any that are missing
-are simply left out and the layout closes up around them, so you can add them
-one at a time.
+The gallery in the About section shows these three, in this starting order:
 
-| File | Where it appears | Shape it's cropped to | Pick |
-|---|---|---|---|
-| `about-main.jpg` | Large photo, left (top on phones) | Tall, 4:5 | Your strongest shot of you working |
-| `about-02.jpg` | Supporting photo under the intro text | Landscape, 3:2 | A second angle / wider shot |
-| `about-03.jpg` | Small square beside the "150 songs" / osu! notes | Square, 1:1 | A candid detail (hands, setup, screen) |
+| Start position | File | Caption |
+|---|---|---|
+| In focus | `about-main.jpg` | Most of the job happens here, usually after dark. |
+| Right | `about-02.jpg` (the desk) | Behind the final frame. |
+| Left | `about-03.jpg` (the video call) | Not all of it is solo. Some of it is a lot of faces on one screen. |
 
-Tips
-- JPG, around 1600–2000px on the long side, under ~400 KB each is plenty.
-  (`ffmpeg -i in.jpg -vf "scale='min(2000,iw)':-2" -q:v 4 about-main.jpg`)
-- Photos are cropped to fill their shape. If an important part gets cut off,
-  add a focus point in `index.html` on that `<img>`, e.g. `style="object-position: 50% 30%"`.
-- Captions and alt text live next to each `<img>` in `index.html` (search for `about-photo`).
-  Update the alt text to describe the actual photo.
-- Then run the site, check, commit and push as usual.
+Where it's configured: `index.html`, search for `data-pf-panel`. Each photo is one
+`<button class="pf-panel">` with:
+
+    data-caption="…"                   the caption shown when it's in focus
+    <img src="/assets/photos/…" alt="…" style="object-position: 50% 70%">
+
+- To swap a photo, overwrite the file with the same name (and update its alt text/caption).
+- The first panel in the markup is the one in focus when the page loads.
+- `object-position` is the crop focus point (x% y%). The centre photo is wide and the
+  side ones are narrow slivers, so keep the subject inside the frame at both shapes.
+- A photo that fails to load is removed and the gallery re-balances (2 → wide + one side,
+  1 → full width).
+
+Preparing a photo (around 2000px, under ~400 KB, location data stripped):
+
+    ffmpeg -i in.jpg -map_metadata -1 -vf "scale='min(2000,iw)':-2" -q:v 4 about-main.jpg
+
+Full-size originals are kept outside the site in `media_originals/` (not uploaded).

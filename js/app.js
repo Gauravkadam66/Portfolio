@@ -6,7 +6,9 @@ import { VideoExhibitionEngine } from './video-engine.js';
 import { TimelineController } from './timeline-controller.js';
 import { EditorialCursor } from './cursor.js';
 import { HeroTypewriter, HeroBackgroundVideo } from './hero.js';
-import { MusicPlayer } from './music-player.js';
+import { MusicSection } from './music-section.js';
+import { PhotoFocus } from './photo-focus.js';
+import { ContactCta } from './contact-cta.js';
 import { AboutSection } from './about.js';
 import { SwipeGallery } from './swipe-gallery.js';
 
@@ -17,7 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const videoEngine = new VideoExhibitionEngine();
   const timelineController = new TimelineController();
   const cursor = new EditorialCursor();
-  const musicPlayer = new MusicPlayer();
+  const music = new MusicSection();
+  document.querySelectorAll('[data-photo-focus]').forEach(el => new PhotoFocus(el));
+  const contactCta = new ContactCta();
   const about = new AboutSection();
   document.querySelectorAll('[data-swipe-gallery]').forEach(el => new SwipeGallery(el));
 
@@ -35,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetElement) {
         e.preventDefault();
         targetElement.scrollIntoView({
-          behavior: 'smooth',
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
           block: 'start'
         });
       }

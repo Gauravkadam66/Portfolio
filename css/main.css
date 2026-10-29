@@ -621,14 +621,6 @@ button {
   letter-spacing: 0.05em;
 }
 
-.hero-origin {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  color: var(--text-light);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 .hero-main-content {
   margin: auto 0;
 }
@@ -1149,8 +1141,8 @@ button {
 
 /* ==========================================================================
    ABOUT — "The person behind the pixels."
-   Loose editorial composition: one tall photograph, a landscape support,
-   a small candid detail, captions close to the images. No cards, no frames.
+   Headline + intro on one row, then the three-photo focus gallery,
+   then the personal notes. No cards, no frames.
    ========================================================================== */
 .about-section {
   padding-top: var(--space-160);
@@ -1160,114 +1152,199 @@ button {
   z-index: 2;
 }
 
+.about-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: var(--space-32) var(--space-64);
+  align-items: end;
+  margin-bottom: var(--space-64);
+}
+
 .about-headline {
   font-size: clamp(2.6rem, 6.4vw, 6rem);
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.045em;
   max-width: 11ch;
-  margin-bottom: var(--space-64);
-}
-
-.about-layout {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  column-gap: var(--space-32);
-  align-items: start;
-}
-
-.about-photo--primary {
-  grid-column: 1 / span 6;
-}
-
-/* Right column sits lower than the photo: deliberate asymmetry */
-.about-column {
-  grid-column: 8 / span 5;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-64);
-  padding-top: clamp(0px, 7vw, 120px);
-}
-
-/* No primary photo yet → the text column takes the stage on its own */
-.about-layout.no-primary .about-column {
-  grid-column: 1 / span 8;
-  padding-top: 0;
 }
 
 .about-lede {
   font-size: clamp(1.1rem, 1.45vw, 1.35rem);
   line-height: 1.6;
   color: var(--text-primary);
-  max-width: 38ch;
+  max-width: 40ch;
+  padding-bottom: 0.4em;
 }
 
-.about-photo {
-  margin: 0;
-}
-
-.about-photo-frame {
+/* --------------------------------------------------------------------------
+   PHOTO FOCUS — three photographs, one in focus.
+   Without JS: a simple row of three. With JS (stage gets data-count), panels
+   are positioned by slot and every change is a CSS transition.
+   -------------------------------------------------------------------------- */
+.pf-stage {
+  --gap: 14px;
+  --side: 16%;
   position: relative;
-  overflow: hidden;
-  background-color: var(--bg-surface);
+  display: flex;
+  gap: var(--gap);
+  height: clamp(360px, 46vw, 640px);
+  touch-action: pan-y; /* vertical swipes scroll the page; horizontal ones change photo */
 }
 
-.about-photo--primary .about-photo-frame { aspect-ratio: 4 / 5; }
-.about-photo--support .about-photo-frame { aspect-ratio: 3 / 2; }
-.about-photo--detail .about-photo-frame  { aspect-ratio: 1 / 1; }
+.pf-panel {
+  position: relative;
+  flex: 1;
+  display: block;
+  padding: 0;
+  overflow: hidden;
+  border-radius: var(--radius-xs);
+  background-color: var(--bg-surface);
+  cursor: pointer;
+}
 
-.about-photo img {
+.pf-panel img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* Fade in once decoded (JS only, so photos are never hidden without it) */
-.js .about-photo img {
-  opacity: 0;
-  transition: opacity 700ms ease;
+.pf-stage[data-count] .pf-panel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition:
+    left 900ms var(--ease-editorial),
+    width 900ms var(--ease-editorial),
+    opacity 400ms ease;
 }
 
-.js .about-photo.is-loaded img {
-  opacity: 1;
+.pf-stage[data-count] .pf-panel img {
+  transform: scale(1.12);
+  filter: blur(10px) brightness(0.5) saturate(0.75);
+  transition: filter 700ms ease, transform 900ms var(--ease-editorial);
 }
 
-.about-photo-frame.has-parallax img {
-  transform: scale(1.1);
-  will-change: transform;
+.pf-panel[data-slot="prev"] {
+  left: 0;
+  width: var(--side);
+  z-index: 1;
 }
 
-.about-photo figcaption {
-  margin-top: var(--space-12);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--text-light);
-  max-width: 34ch;
+.pf-panel[data-slot="active"] {
+  left: calc(var(--side) + var(--gap));
+  width: calc(100% - 2 * (var(--side) + var(--gap)));
+  z-index: 2;
+  cursor: default;
 }
 
-/* Off the clock: candid detail beside the personal notes */
-.about-offclock {
+.pf-panel[data-slot="next"] {
+  left: calc(100% - var(--side));
+  width: var(--side);
+  z-index: 1;
+}
+
+.pf-stage[data-count] .pf-panel[data-slot="active"] img {
+  transform: scale(1);
+  filter: none;
+}
+
+/* Side photos react to hover/focus: a hint that they can be brought forward */
+.pf-stage[data-count] .pf-panel:not([data-slot="active"]):hover img,
+.pf-stage[data-count] .pf-panel:not([data-slot="active"]):focus-visible img {
+  filter: blur(6px) brightness(0.68) saturate(0.85);
+  transform: scale(1.08);
+}
+
+/* Direction cue on the side photos (works on touch too) */
+.pf-stage[data-count] .pf-panel:not([data-slot="active"])::after {
+  content: '→';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
   display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
-  gap: var(--space-24);
-  align-items: end;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  opacity: 0.85;
+  transition: opacity 400ms ease, transform 400ms var(--ease-editorial);
 }
 
-.about-offclock:not(:has(.about-photo--detail)) {
-  grid-template-columns: minmax(0, 1fr);
+.pf-stage[data-count] .pf-panel[data-slot="prev"]::after {
+  content: '←';
 }
 
-.about-notes {
+.pf-stage[data-count] .pf-panel:not([data-slot="active"]):hover::after {
+  transform: scale(1.08);
+}
+
+/* A photo hopping from one side to the other fades so it never streaks across */
+.pf-stage[data-count] .pf-panel.is-crossing {
+  opacity: 0;
+  transition:
+    left 900ms var(--ease-editorial),
+    width 900ms var(--ease-editorial),
+    opacity 180ms ease;
+}
+
+/* Fewer than three photos */
+.pf-stage[data-count="2"] .pf-panel[data-slot="active"] {
+  left: 0;
+  width: calc(100% - var(--side) - var(--gap));
+}
+
+.pf-stage[data-count="1"] .pf-panel[data-slot="active"] {
+  left: 0;
+  width: 100%;
+}
+
+.pf-footer {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
   gap: var(--space-24);
+  margin-top: var(--space-16);
+}
+
+.pf-caption {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  min-height: 1.5em;
+}
+
+.pf-meta {
+  display: flex;
+  gap: var(--space-16);
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-light);
+}
+
+.photo-focus.is-single .pf-meta {
+  display: none;
+}
+
+/* Personal notes, side by side under the photographs */
+.about-notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-32) var(--space-64);
+  margin-top: var(--space-96);
+  padding-top: var(--space-32);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .about-note {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.55;
   color: var(--text-secondary);
+  max-width: 40ch;
 }
 
 .about-note-aside {
@@ -1278,26 +1355,26 @@ button {
   color: var(--text-light);
 }
 
-/* "Hear one" — starts the site music (only shown when the track exists) */
+/* "Open the player" — jumps to the music section and opens it */
 .about-note-action {
   display: inline;
-  font: inherit;
   color: var(--text-primary);
   padding: 0 0 2px;
   background-image: linear-gradient(currentColor, currentColor);
   background-repeat: no-repeat;
   background-position: 0 100%;
   background-size: 100% 1px;
-  cursor: pointer;
   white-space: nowrap;
   transition: color var(--transition-fast);
 }
 
-.about-note-action::before {
-  content: '▶\FE0E';
-  font-size: 0.65em;
-  margin-right: 0.45em;
-  vertical-align: 0.15em;
+.about-note-action[hidden] {
+  display: none;
+}
+
+.about-note-action::after {
+  content: ' ↓';
+  font-size: 0.85em;
 }
 
 .about-note-action:hover {
@@ -1908,135 +1985,678 @@ button {
 }
 
 /* ==========================================================================
-   MUSIC PLAYER — compact, persistent, bottom-right. OFF until clicked.
+   MUSIC SECTION — a closed panel in the page flow that opens into the player.
+   Deep plum so it reads as its own little room, still inside the site.
    ========================================================================== */
-.music-player {
-  position: fixed;
-  right: max(20px, env(safe-area-inset-right));
-  bottom: max(20px, env(safe-area-inset-bottom));
-  z-index: 950;
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  max-width: calc(100vw - 32px);
-  padding: 5px 12px 5px 5px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background-color: rgba(5, 8, 18, 0.66);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  color: var(--text-primary);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 500ms var(--ease-editorial), transform 500ms var(--ease-editorial);
+.music-section {
+  padding-top: var(--space-128);
+  position: relative;
+  z-index: 2;
+  scroll-margin-top: 72px;
 }
 
-.music-player[hidden] {
+.music-section[hidden] {
   display: none;
 }
 
-.music-player.is-visible {
+.music-panel {
+  --plum-card: rgba(46, 30, 60, 0.92);
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(24, 15, 33, 0.78);
+  transition: background-color 700ms ease, border-color 700ms ease;
+}
+
+.music-panel.is-open {
+  background-color: rgba(26, 15, 36, 0.94);
+  border-color: rgba(255, 255, 255, 0.11);
+}
+
+.music-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-8);
+}
+
+.music-toggle {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-24);
+  padding: var(--space-16) var(--space-24) var(--space-16) var(--space-16);
+  border-radius: 16px;
+  text-align: left;
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.music-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.035);
+}
+
+.music-icon {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.music-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.music-head-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.music-title {
+  font-size: clamp(1.15rem, 1.8vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.music-sub {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.music-cue {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.music-cue-close,
+.music-panel.is-open .music-cue-open {
+  display: none;
+}
+
+.music-panel.is-open .music-cue-close {
+  display: inline;
+}
+
+.music-chevron {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform 500ms var(--ease-editorial);
+}
+
+.music-panel.is-open .music-chevron {
+  transform: translateY(2px) rotate(-135deg);
+}
+
+/* Closed + playing: pause without reopening */
+.music-mini-pause {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-right: var(--space-12);
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.music-mini-pause[hidden] {
+  display: none;
+}
+
+/* Expand: the body grows from 0 to its natural height (no fixed heights, no jumps) */
+.music-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 750ms var(--ease-editorial);
+}
+
+.music-panel.is-open .music-body {
+  grid-template-rows: 1fr;
+}
+
+.music-body-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.music-body-inner > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 400ms ease, transform 600ms var(--ease-editorial);
+}
+
+.music-panel.is-open .music-body-inner > * {
   opacity: 1;
   transform: none;
 }
 
-.mp-toggle {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
-  color: inherit;
-  padding: 0;
-  min-height: 36px;
-  border-radius: 999px;
+.music-panel.is-open .music-body-inner > :nth-child(1) { transition-delay: 180ms; }
+.music-panel.is-open .music-body-inner > :nth-child(2) { transition-delay: 300ms; }
+
+/* ---- Card stage ------------------------------------------------------- */
+.ms-stage {
+  position: relative;
+  padding: var(--space-24) var(--space-16) 0;
 }
 
-.mp-icon {
+.ms-cards {
+  --w: 240px;
   position: relative;
-  flex: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  list-style: none;
+  height: calc(var(--w) + 110px);
+  perspective: 1400px;
+}
+
+.ms-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--w);
+  margin-left: calc(var(--w) / -2);
+  transition: transform 800ms var(--ease-editorial), opacity 600ms ease, filter 600ms ease;
+}
+
+.ms-card[data-slot="active"] {
+  z-index: 3;
+  transform: none;
+}
+
+.ms-card[data-slot="prev"] {
+  z-index: 2;
+  transform: translateX(-72%) scale(0.84) rotateY(16deg);
+  opacity: 0.6;
+  filter: brightness(0.7);
+}
+
+.ms-card[data-slot="next"] {
+  z-index: 2;
+  transform: translateX(72%) scale(0.84) rotateY(-16deg);
+  opacity: 0.6;
+  filter: brightness(0.7);
+}
+
+.ms-card:not([data-slot="active"]):hover {
+  opacity: 0.8;
+  filter: brightness(0.85);
+}
+
+.ms-card-select {
+  display: block;
+  width: 100%;
+  padding: 10px 10px var(--space-16);
+  border-radius: 18px;
+  background-color: var(--plum-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  color: var(--text-primary);
+  text-align: center;
+  transition: border-color 500ms ease;
+}
+
+.ms-card.is-selected .ms-card-select {
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+.ms-card-title {
+  display: block;
+  margin-top: var(--space-12);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ms-card-mood {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Artwork: an image when provided (data-art), otherwise a type-led treatment per mood */
+.ms-art,
+.ms-now-art {
+  background-size: cover;
+  background-position: center;
+}
+
+.ms-art {
+  position: relative;
   display: grid;
   place-items: center;
-  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.mp-toggle:hover .mp-icon {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.35);
+.has-art .ms-art {
+  background-image: var(--art) !important;
 }
 
-/* Play ▶ */
-.mp-icon::before {
-  content: '';
-  width: 9px;
-  height: 11px;
-  margin-left: 2px;
+.has-art .ms-art-type {
+  display: none;
+}
+
+.ms-art-type {
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.ms-card--edm .ms-art,
+.ms-now-art--edm {
+  background-color: #0b1030;
+  background-image:
+    radial-gradient(circle at 28% 30%, rgba(80, 100, 230, 0.75) 0, transparent 55%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 11px);
+}
+
+.ms-card--weeknd .ms-art,
+.ms-now-art--weeknd {
+  background-color: #12050a;
+  background-image: radial-gradient(circle at 72% 24%, rgba(190, 20, 50, 0.85) 0, transparent 58%);
+}
+
+.ms-card--weeknd .ms-art-type {
+  font-weight: 300;
+  font-style: italic;
+  font-size: 2.3rem;
+  letter-spacing: -0.02em;
+}
+
+.ms-card--classical .ms-art,
+.ms-now-art--classical {
+  background-color: #e8e0cf;
+  background-image: repeating-linear-gradient(0deg, rgba(60, 45, 30, 0.16) 0 1px, transparent 1px 10px);
+}
+
+.ms-card--classical .ms-art-type {
+  color: #2a2118;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: none;
+  font-size: 2.4rem;
+  letter-spacing: -0.01em;
+}
+
+/* Play button on each card (over the artwork) */
+.ms-card-play {
+  position: absolute;
+  top: calc(var(--w) - 62px);
+  right: 22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background-color: var(--text-primary);
+  color: #160c1e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform var(--transition-fast);
+}
+
+.ms-card-play:hover {
+  transform: scale(1.06);
+}
+
+.ms-card:not([data-slot="active"]) .ms-card-play {
+  opacity: 0.85;
+}
+
+/* Play ▶ / pause ❚❚ icon shared by the card buttons and the main button */
+.ms-play-icon {
+  width: 11px;
+  height: 13px;
+  margin-left: 3px;
   background-color: currentColor;
   clip-path: polygon(0 0, 100% 50%, 0 100%);
 }
 
-/* Pause ❚❚ (playing / loading) */
-.music-player[data-state="playing"] .mp-icon::before,
-.music-player[data-state="loading"] .mp-icon::before {
-  width: 3px;
-  height: 11px;
-  margin-left: -6px;
+.ms-card.is-playing .ms-card-play .ms-play-icon,
+.music-panel.is-playing .ms-btn--main .ms-play-icon {
+  width: 4px;
+  height: 13px;
+  margin-left: -7px;
   clip-path: none;
-  box-shadow: 6px 0 0 currentColor;
+  box-shadow: 7px 0 0 currentColor;
 }
 
-/* Loading ring */
-.music-player[data-state="loading"] .mp-icon::after {
+/* ---- The Weeknd note ------------------------------------------------- */
+.ms-note {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  width: fit-content;
+  max-width: 100%;
+  margin: var(--space-12) auto 0;
+  padding: 8px 8px 8px 16px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 400ms ease, transform 500ms var(--ease-editorial);
+}
+
+.ms-note[hidden] {
+  display: none;
+}
+
+.ms-note.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* little tick pointing up at the card it belongs to */
+.ms-note::before {
   content: '';
   position: absolute;
-  inset: -1px;
+  top: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  background-color: rgba(58, 44, 70, 1);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  transform: rotate(45deg);
+}
+
+.ms-note-seek {
+  font: inherit;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-primary);
+  padding: 0 0 1px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  cursor: pointer;
+}
+
+.ms-note-seek:disabled {
+  opacity: 0.5;
+  background-size: 0 0;
+  cursor: default;
+}
+
+.ms-note-close {
+  flex: none;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  border: 1px solid transparent;
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.ms-note-close:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+/* ---- Control bar ------------------------------------------------------ */
+.ms-bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 0.9fr) minmax(0, 1.7fr) auto;
+  grid-template-areas: "transport now timeline volume";
+  align-items: center;
+  gap: var(--space-24);
+  margin: var(--space-24) var(--space-24) 0;
+  padding: 10px 18px 10px 10px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ms-transport { grid-area: transport; display: flex; align-items: center; gap: 4px; }
+.ms-now { grid-area: now; }
+.ms-timeline { grid-area: timeline; }
+.ms-volume { grid-area: volume; display: flex; align-items: center; gap: 6px; }
+
+.ms-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.ms-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.ms-btn--main {
+  width: 48px;
+  height: 48px;
+  background-color: var(--text-primary);
+  color: #160c1e;
+}
+
+.ms-btn--main:hover {
+  background-color: #ffffff;
+}
+
+/* Loading ring on the main button while the browser buffers */
+.music-panel.is-loading .ms-btn--main::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
   border-top-color: var(--text-primary);
   animation: buffer-spin 0.9s linear infinite;
 }
 
-.mp-text {
+/* |◀  ▶| */
+.ms-ico {
+  width: 14px;
+  height: 12px;
+  background-color: currentColor;
+}
+
+.ms-ico--prev {
+  clip-path: polygon(0 0, 20% 0, 20% 45%, 100% 0, 100% 100%, 20% 55%, 20% 100%, 0 100%);
+}
+
+.ms-ico--next {
+  clip-path: polygon(100% 0, 80% 0, 80% 45%, 0 0, 0 100%, 80% 55%, 80% 100%, 100% 100%);
+}
+
+.ms-svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ms-slash { display: none; }
+.music-panel.is-muted .ms-slash { display: inline; }
+.music-panel.is-muted .ms-waves { display: none; }
+
+.ms-now {
   display: flex;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-12);
+  min-width: 0;
+  padding: 6px 12px 6px 6px;
+  border-radius: 14px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.ms-now-art {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.ms-now-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ms-now-title,
+.ms-now-mood {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.mp-label {
+.ms-now-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.ms-now-mood {
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
-.music-player[data-state="playing"] .mp-label {
-  color: var(--text-primary);
+.ms-timeline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
 }
 
-.mp-hint-touch {
-  display: none;
+.ms-time {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
-/* Equalizer — only while actually playing */
-.mp-eq {
-  display: none;
+/* Decorative waveform; the played part is a clip of a bright copy, driven by --p */
+.ms-wave {
+  --p: 0%;
+  position: relative;
+  flex: 1;
+  min-width: 60px;
+  height: 34px;
+  border-radius: 4px;
+}
+
+.ms-wave-bars {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+}
+
+.ms-wave-bars i {
+  flex: 1;
+  height: calc(var(--h) * 100%);
+  min-height: 2px;
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.22);
+}
+
+.ms-wave-bars--played {
+  clip-path: inset(0 calc(100% - var(--p)) 0 0);
+}
+
+.ms-wave-bars--played i {
+  background-color: var(--text-primary);
+}
+
+/* The real timeline: an invisible native range over the waveform (click, drag, keys) */
+.ms-seek {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ms-seek::-webkit-slider-thumb { -webkit-appearance: none; width: 2px; height: 34px; }
+.ms-seek::-moz-range-thumb { width: 2px; height: 34px; border: 0; }
+.ms-seek:disabled { cursor: default; }
+
+.ms-wave:has(.ms-seek:focus-visible) {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 4px;
+}
+
+.ms-vol {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 20px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ms-vol::-webkit-slider-runnable-track { height: 2px; background: rgba(255, 255, 255, 0.25); border-radius: 2px; }
+.ms-vol::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; margin-top: -4px; border-radius: 50%; background: var(--text-primary); }
+.ms-vol::-moz-range-track { height: 2px; background: rgba(255, 255, 255, 0.25); }
+.ms-vol::-moz-range-thumb { width: 10px; height: 10px; border: 0; border-radius: 50%; background: var(--text-primary); }
+
+.ms-status {
+  min-height: 1.4em;
+  margin: var(--space-12) var(--space-24) var(--space-24);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-light);
+}
+
+/* Equalizer (closed-state pause button) */
+.ms-eq {
+  display: inline-flex;
   align-items: flex-end;
   gap: 2px;
   height: 11px;
 }
 
-.music-player[data-state="playing"] .mp-eq {
-  display: inline-flex;
-}
-
-.mp-eq i {
+.ms-eq i {
   width: 2px;
   height: 100%;
   background-color: var(--accent-blue-hover);
@@ -2044,169 +2664,84 @@ button {
   animation: mp-eq 900ms ease-in-out infinite alternate;
 }
 
-.mp-eq i:nth-child(2) { animation-duration: 700ms; animation-delay: -200ms; }
-.mp-eq i:nth-child(3) { animation-duration: 1100ms; animation-delay: -450ms; }
-.mp-eq i:nth-child(4) { animation-duration: 800ms; animation-delay: -650ms; }
+.ms-eq i:nth-child(2) { animation-duration: 700ms; animation-delay: -200ms; }
+.ms-eq i:nth-child(3) { animation-duration: 1100ms; animation-delay: -450ms; }
+.ms-eq i:nth-child(4) { animation-duration: 800ms; animation-delay: -650ms; }
 
 @keyframes mp-eq {
   from { transform: scaleY(0.25); }
   to   { transform: scaleY(1); }
 }
 
-/* Engaged controls (time, seek, mute) appear once the track has been started */
-.mp-time,
-.mp-mute,
-.mp-seek-wrap {
-  display: none;
+/* ==========================================================================
+   CONTACT CTA — the one fixed element. Off-white like the video cursor,
+   with a slow outer ring that breathes out every few seconds.
+   ========================================================================== */
+#contact {
+  scroll-margin-top: 72px; /* clear the fixed header when jumped to */
 }
 
-.music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-time {
-  display: inline;
-  color: var(--text-secondary);
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
-}
-
-.music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-mute {
-  display: grid;
-}
-
-.music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-seek-wrap {
-  display: block;
-  order: 2;
-  width: 110px;
-}
-
-.mp-toggle { order: 1; }
-.mp-time { order: 3; }
-.mp-mute { order: 4; }
-
-.mp-mute {
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: var(--text-secondary);
-  transition: color var(--transition-fast);
-}
-
-.mp-mute:hover {
-  color: var(--text-primary);
-}
-
-.mp-mute svg {
-  width: 16px;
-  height: 16px;
-}
-
-.mp-mute .mp-slash { display: none; }
-.music-player.is-muted .mp-mute .mp-slash { display: inline; }
-.music-player.is-muted .mp-mute .mp-waves { display: none; }
-
-/* Native range, restyled to a thin timeline */
-.mp-seek {
-  -webkit-appearance: none;
-  appearance: none;
-  display: block;
-  width: 100%;
-  height: 20px;
-  margin: 0;
-  background: transparent;
-  cursor: pointer;
-  --p: 0%;
-}
-
-.mp-seek::-webkit-slider-runnable-track {
-  height: 2px;
-  border-radius: 2px;
-  background: linear-gradient(to right, var(--text-primary) var(--p), rgba(255, 255, 255, 0.18) var(--p));
-}
-
-.mp-seek::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-  margin-top: -4px;
-  border-radius: 50%;
+.contact-cta {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 960;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
   background-color: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 450ms var(--ease-editorial),
+    opacity 450ms ease,
+    visibility 0s linear 0s;
 }
 
-.mp-seek::-moz-range-track {
-  height: 2px;
-  background: rgba(255, 255, 255, 0.18);
+.contact-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(242, 243, 245, 0.6);
+  pointer-events: none;
+  animation: cta-breathe 3.8s ease-out infinite;
 }
 
-.mp-seek::-moz-range-progress {
-  height: 2px;
-  background: var(--text-primary);
+@keyframes cta-breathe {
+  0%        { transform: scale(1, 1);       opacity: 0.65; }
+  50%, 100% { transform: scale(1.14, 1.4);  opacity: 0; }
 }
 
-.mp-seek::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  border: 0;
-  border-radius: 50%;
-  background-color: var(--text-primary);
+.contact-cta:hover {
+  transform: translateY(-2px);
 }
 
-.mp-seek:disabled {
-  cursor: default;
-  opacity: 0.5;
+.contact-cta-arrow {
+  display: inline-block;
+  transition: transform 400ms var(--ease-editorial);
 }
 
-/* Touch devices say "tap", not "click" */
-@media (hover: none) {
-  .mp-hint-desktop { display: none; }
-  .mp-hint-touch { display: inline; }
+.contact-cta:hover .contact-cta-arrow {
+  transform: translateY(2px);
 }
 
-/* Phones: smaller footprint — seek becomes a thin line along the top edge */
-@media (max-width: 600px) {
-  .music-player {
-    right: max(12px, env(safe-area-inset-right));
-    bottom: max(12px, env(safe-area-inset-bottom));
-    gap: var(--space-8);
-    padding: 4px 8px 4px 4px;
-  }
-
-  .mp-icon {
-    width: 40px;
-    height: 40px;
-  }
-
-  .music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-seek-wrap {
-    position: absolute;
-    left: 22px;
-    right: 22px;
-    top: -10px;
-    width: auto;
-  }
-
-  .mp-mute {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* Phones, past the hero: compact so it never sits on top of what you're reading.
-   Off/paused → just the round play button (its accessible name still says what it does).
-   Playing → pause icon + equalizer + time, no words: the state is still clear. */
-@media (max-width: 600px) {
-  .music-player.is-compact .mp-label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  .music-player.is-compact:is([data-state="off"], [data-state="error"]) {
-    padding: 4px;
-    gap: 0;
-  }
-
-  .music-player.is-compact:is([data-state="off"], [data-state="error"]) .mp-text {
-    display: none;
-  }
+/* Contact is on screen: step aside (it would only cover what it points to) */
+.contact-cta.is-away {
+  opacity: 0;
+  transform: translateY(14px);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 450ms var(--ease-editorial),
+    opacity 450ms ease,
+    visibility 0s linear 450ms;
 }
