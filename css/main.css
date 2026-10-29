@@ -349,13 +349,13 @@ button {
 }
 
 /* ==========================================================================
-   SIGNATURE EDITING MOTIF: Section Timeline Header
-   01 / VSL ──────────●─────────────────────────────────
-   (Timecode text removed; line extends cleanly to endpoint)
+   SECTION HIERARCHY
+   Typography, space and composition carry the hierarchy — no numbered labels.
+   The editing-timeline scrubber appears only where it means something:
+   where the work starts (tracks scroll) and at Contact (the finished edit).
    ========================================================================== */
 .section-timeline-header {
-  padding-top: var(--space-128);
-  margin-bottom: var(--space-64);
+  padding-top: var(--space-160);
   position: relative;
   z-index: 2;
 }
@@ -363,19 +363,7 @@ button {
 .timeline-motif-bar {
   display: flex;
   align-items: center;
-  gap: var(--space-24);
-  padding-bottom: var(--space-24);
-  border-bottom: 1px solid var(--border-subtle);
-  margin-bottom: var(--space-32);
-}
-
-.timeline-sec-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  color: var(--accent-playhead);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  min-width: 60px;
+  margin-bottom: var(--space-48);
 }
 
 .timeline-scrubber-track {
@@ -423,61 +411,60 @@ button {
   text-transform: uppercase;
 }
 
+/* Statements read as sentences, not labels */
 .section-statement {
-  font-size: var(--text-subheading);
+  font-size: clamp(1.2rem, 1.7vw, 1.65rem);
+  line-height: 1.4;
   color: var(--text-secondary);
-  max-width: 680px;
+  max-width: 34ch;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+}
+
+/* Split intro: heading left, statement right, one hairline beneath */
+.section-title-wrap--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  align-items: end;
+  gap: var(--space-24) var(--space-48);
+  padding-bottom: var(--space-32);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.section-title-wrap--split .section-statement {
+  justify-self: start;
+  padding-bottom: 0.35em;
 }
 
 .section-body {
   margin-top: var(--space-64);
 }
 
-/* Subsection header: 01 / TITLE ··· META (sits on the same hairline system as the timeline motif) */
+/* Subsections: sentence-case title and its description share one hairline row */
 .subsection + .subsection {
-  margin-top: var(--space-96);
+  margin-top: var(--space-128);
 }
 
 .subsection-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: baseline;
-  flex-wrap: wrap;
-  gap: var(--space-8) var(--space-16);
+  gap: var(--space-8) var(--space-48);
   padding-bottom: var(--space-16);
-  margin-bottom: var(--space-24);
+  margin-bottom: var(--space-32);
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.subsection-index {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  color: var(--accent-playhead);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
-
 .subsection-title {
-  font-size: clamp(1.35rem, 2.2vw, 2rem);
+  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
   font-weight: 500;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
-}
-
-.subsection-meta {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  color: var(--text-light);
-  letter-spacing: 0.06em;
 }
 
 .subsection-desc {
   font-size: var(--text-body);
   color: var(--text-secondary);
-  max-width: 620px;
-  margin-bottom: var(--space-32);
+  max-width: 44ch;
 }
 
 /* Numbered video grid (VSL · Explainers · Podcasts) */
@@ -1161,97 +1148,270 @@ button {
 }
 
 /* ==========================================================================
-   SECTION 09: ABOUT
+   ABOUT — "The person behind the pixels."
+   Loose editorial composition: one tall photograph, a landscape support,
+   a small candid detail, captions close to the images. No cards, no frames.
    ========================================================================== */
 .about-section {
   padding-top: var(--space-160);
-  padding-bottom: var(--space-96);
+  padding-bottom: var(--space-128);
   border-top: 1px solid var(--border-subtle);
   position: relative;
   z-index: 2;
 }
 
-.about-grid {
+.about-headline {
+  font-size: clamp(2.6rem, 6.4vw, 6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  max-width: 11ch;
+  margin-bottom: var(--space-64);
+}
+
+.about-layout {
   display: grid;
-  grid-template-columns: 3fr 7fr;
-  gap: var(--space-64);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-32);
+  align-items: start;
 }
 
-.about-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  color: var(--accent-playhead);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  position: sticky;
-  top: 100px;
+.about-photo--primary {
+  grid-column: 1 / span 6;
 }
 
-.about-content {
+/* Right column sits lower than the photo: deliberate asymmetry */
+.about-column {
+  grid-column: 8 / span 5;
   display: flex;
   flex-direction: column;
-  gap: var(--space-48);
+  gap: var(--space-64);
+  padding-top: clamp(0px, 7vw, 120px);
 }
 
-.about-lead-statement {
-  font-size: clamp(1.8rem, 3.2vw, 3rem);
+/* No primary photo yet → the text column takes the stage on its own */
+.about-layout.no-primary .about-column {
+  grid-column: 1 / span 8;
+  padding-top: 0;
+}
+
+.about-lede {
+  font-size: clamp(1.1rem, 1.45vw, 1.35rem);
+  line-height: 1.6;
+  color: var(--text-primary);
+  max-width: 38ch;
+}
+
+.about-photo {
+  margin: 0;
+}
+
+.about-photo-frame {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-surface);
+}
+
+.about-photo--primary .about-photo-frame { aspect-ratio: 4 / 5; }
+.about-photo--support .about-photo-frame { aspect-ratio: 3 / 2; }
+.about-photo--detail .about-photo-frame  { aspect-ratio: 1 / 1; }
+
+.about-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Fade in once decoded (JS only, so photos are never hidden without it) */
+.js .about-photo img {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.js .about-photo.is-loaded img {
+  opacity: 1;
+}
+
+.about-photo-frame.has-parallax img {
+  transform: scale(1.1);
+  will-change: transform;
+}
+
+.about-photo figcaption {
+  margin-top: var(--space-12);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-light);
+  max-width: 34ch;
+}
+
+/* Off the clock: candid detail beside the personal notes */
+.about-offclock {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: var(--space-24);
+  align-items: end;
+}
+
+.about-offclock:not(:has(.about-photo--detail)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.about-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+.about-note {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.about-note-aside {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-light);
+}
+
+/* "Hear one" — starts the site music (only shown when the track exists) */
+.about-note-action {
+  display: inline;
+  font: inherit;
+  color: var(--text-primary);
+  padding: 0 0 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.about-note-action::before {
+  content: '▶\FE0E';
+  font-size: 0.65em;
+  margin-right: 0.45em;
+  vertical-align: 0.15em;
+}
+
+.about-note-action:hover {
+  color: var(--accent-blue-hover);
+}
+
+/* osu! easter egg: an approach circle closes onto the hit circle */
+.osu-hit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font: inherit;
+  color: var(--text-primary);
+  padding: 0;
+  cursor: pointer;
+}
+
+.osu-hit-word {
+  background-image: linear-gradient(var(--border-dark), var(--border-dark));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 1px;
+  padding-bottom: 1px;
+}
+
+.osu-hit-circle {
+  position: relative;
+  flex: none;
+  width: 0.85em;
+  height: 0.85em;
+  border-radius: 50%;
+  border: 2px solid var(--text-primary);
+  background: radial-gradient(circle, var(--accent-blue-hover) 0 42%, transparent 44%);
+}
+
+.osu-hit-approach {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent-blue-hover);
+  opacity: 0;
+  transform: scale(2.8);
+  pointer-events: none;
+}
+
+.osu-hit.is-playing .osu-hit-approach {
+  animation: osu-approach 600ms cubic-bezier(0.45, 0, 1, 1) forwards;
+}
+
+.osu-hit.is-hit .osu-hit-circle {
+  animation: osu-burst 420ms ease-out;
+}
+
+@keyframes osu-approach {
+  0%   { opacity: 0; transform: scale(2.8); }
+  20%  { opacity: 0.9; }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes osu-burst {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(80, 100, 161, 0.65); }
+  45%  { transform: scale(1.22); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 12px rgba(80, 100, 161, 0); }
+}
+
+/* How I work: pull-quote + process list (numbers removed) */
+.about-process {
+  margin-top: var(--space-160);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-32);
+  row-gap: var(--space-48);
+  align-items: start;
+}
+
+.about-process-quote {
+  grid-column: 1 / span 6;
+  font-size: clamp(1.6rem, 2.8vw, 2.6rem);
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: -0.035em;
   color: var(--text-primary);
 }
 
-.about-bio {
-  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
-  line-height: 1.65;
+.about-process-list-wrap {
+  grid-column: 8 / span 5;
+}
+
+.about-process-heading {
+  font-size: var(--text-body);
+  font-weight: 400;
+  letter-spacing: 0;
   color: var(--text-secondary);
-  max-width: 820px;
-}
-
-.capabilities-wrapper {
-  margin-top: var(--space-32);
-  padding-top: var(--space-48);
-  border-top: 1px solid var(--border-subtle);
-}
-
-.capabilities-header {
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-light);
-  margin-bottom: var(--space-24);
+  margin-bottom: var(--space-16);
 }
 
 .capabilities-list {
-  display: flex;
-  flex-direction: column;
   list-style: none;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .capability-item {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  padding: var(--space-24) 0;
+  padding: var(--space-16) 0;
   border-bottom: 1px solid var(--border-subtle);
-  font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.5rem);
   font-weight: 500;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
   color: var(--text-primary);
   transition: transform var(--transition-fast), color var(--transition-fast);
 }
 
 .capability-item:hover {
-  transform: translateX(8px);
-  color: var(--accent-playhead);
-}
-
-.capability-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  color: var(--text-light);
-  font-weight: 400;
+  transform: translateX(6px);
+  color: var(--accent-blue-hover);
 }
 
 /* ==========================================================================
@@ -1602,15 +1762,451 @@ button {
   border: 1px solid var(--border-subtle);
 }
 
-/* Subtle Scroll Animations */
-.reveal-on-scroll {
+/* ==========================================================================
+   SCROLL REVEALS — a few distinct kinds, used where they mean something.
+   Hidden states only apply when JS is running (html.js), so nothing is ever
+   stuck invisible. Reveals run once and never make the visitor wait long.
+   ========================================================================== */
+
+/* Fade: generic content */
+.js .reveal-on-scroll {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 600ms var(--ease-editorial), transform 600ms var(--ease-editorial);
-  will-change: opacity, transform;
 }
 
-.reveal-on-scroll.is-revealed {
+.js .reveal-on-scroll.is-revealed {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Mask: media wipes up into place like a frame being revealed.
+   The clip sits on the children, never the observed element itself: a fully clipped
+   target never counts as visible to IntersectionObserver, so it would never reveal. */
+.js .reveal-mask:not(.reveal-done) > * {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 900ms var(--ease-editorial) var(--reveal-delay, 0ms);
+}
+
+.js .reveal-mask:not(.reveal-done) > :nth-child(2) {
+  transition-delay: calc(var(--reveal-delay, 0ms) + 90ms);
+}
+
+.js .reveal-mask.is-revealed:not(.reveal-done) > * {
+  clip-path: inset(0 0 0 0);
+}
+
+/* After the wipe (.reveal-done) the clip and transition override are gone entirely, so
+   the video frame's own transitions and the audio-focus glow/scale work untouched */
+
+/* Rise: short text settling in */
+.js .reveal-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 700ms ease var(--reveal-delay, 0ms),
+    transform 900ms var(--ease-editorial) var(--reveal-delay, 0ms);
+}
+
+.js .reveal-rise.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+/* Lines: title and role rise out of their own line boxes */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+  padding: 0.12em 0.2em 0.12em 0;
+  margin: -0.12em -0.2em -0.12em 0;
+}
+
+.reveal-line > span {
+  display: block;
+}
+
+.js .reveal-lines .reveal-line > span {
+  transform: translateY(110%);
+  transition: transform 900ms var(--ease-editorial);
+}
+
+.js .reveal-lines .project-disciplines .reveal-line > span { transition-delay: 90ms; }
+.js .reveal-lines .project-year .reveal-line > span { transition-delay: 160ms; }
+
+.js .reveal-lines.is-revealed .reveal-line > span {
+  transform: none;
+}
+
+/* ==========================================================================
+   SWIPE GALLERY (reels below 992px) — native horizontal scroll + snap
+   ========================================================================== */
+.swipe-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-12);
+  margin-top: var(--space-16);
+}
+
+.swipe-controls[hidden] {
+  display: none;
+}
+
+.swipe-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border-muted);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: border-color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.swipe-btn:hover:not(:disabled) {
+  border-color: var(--text-secondary);
+}
+
+.swipe-btn:disabled {
+  opacity: 0.28;
+  cursor: default;
+}
+
+.swipe-count {
+  min-width: 5ch;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 992px) {
+  .reels-gallery .reels-grid-3col {
+    display: flex;
+    gap: var(--space-16);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    position: relative;
+    /* Full-bleed track that still lines up with the page margins */
+    margin: calc(var(--space-24) * -1) calc(var(--container-pad) * -1);
+    padding: var(--space-24) var(--container-pad);
+    scroll-padding-inline: var(--container-pad);
+  }
+
+  .reels-gallery .reels-grid-3col::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Next card peeks in: a clear cue that there's more to swipe */
+  .reels-gallery .reels-grid-3col > .exhibition-project {
+    flex: 0 0 min(68vw, 300px);
+    max-width: none;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+}
+
+/* ==========================================================================
+   MUSIC PLAYER — compact, persistent, bottom-right. OFF until clicked.
+   ========================================================================== */
+.music-player {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(20px, env(safe-area-inset-bottom));
+  z-index: 950;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  max-width: calc(100vw - 32px);
+  padding: 5px 12px 5px 5px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  background-color: rgba(5, 8, 18, 0.66);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 500ms var(--ease-editorial), transform 500ms var(--ease-editorial);
+}
+
+.music-player[hidden] {
+  display: none;
+}
+
+.music-player.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.mp-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  padding: 0;
+  min-height: 36px;
+  border-radius: 999px;
+}
+
+.mp-icon {
+  position: relative;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: grid;
+  place-items: center;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.mp-toggle:hover .mp-icon {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Play ▶ */
+.mp-icon::before {
+  content: '';
+  width: 9px;
+  height: 11px;
+  margin-left: 2px;
+  background-color: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+/* Pause ❚❚ (playing / loading) */
+.music-player[data-state="playing"] .mp-icon::before,
+.music-player[data-state="loading"] .mp-icon::before {
+  width: 3px;
+  height: 11px;
+  margin-left: -6px;
+  clip-path: none;
+  box-shadow: 6px 0 0 currentColor;
+}
+
+/* Loading ring */
+.music-player[data-state="loading"] .mp-icon::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  border-top-color: var(--text-primary);
+  animation: buffer-spin 0.9s linear infinite;
+}
+
+.mp-text {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  white-space: nowrap;
+}
+
+.mp-label {
+  color: var(--text-secondary);
+}
+
+.music-player[data-state="playing"] .mp-label {
+  color: var(--text-primary);
+}
+
+.mp-hint-touch {
+  display: none;
+}
+
+/* Equalizer — only while actually playing */
+.mp-eq {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 11px;
+}
+
+.music-player[data-state="playing"] .mp-eq {
+  display: inline-flex;
+}
+
+.mp-eq i {
+  width: 2px;
+  height: 100%;
+  background-color: var(--accent-blue-hover);
+  transform-origin: bottom;
+  animation: mp-eq 900ms ease-in-out infinite alternate;
+}
+
+.mp-eq i:nth-child(2) { animation-duration: 700ms; animation-delay: -200ms; }
+.mp-eq i:nth-child(3) { animation-duration: 1100ms; animation-delay: -450ms; }
+.mp-eq i:nth-child(4) { animation-duration: 800ms; animation-delay: -650ms; }
+
+@keyframes mp-eq {
+  from { transform: scaleY(0.25); }
+  to   { transform: scaleY(1); }
+}
+
+/* Engaged controls (time, seek, mute) appear once the track has been started */
+.mp-time,
+.mp-mute,
+.mp-seek-wrap {
+  display: none;
+}
+
+.music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-time {
+  display: inline;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-mute {
+  display: grid;
+}
+
+.music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-seek-wrap {
+  display: block;
+  order: 2;
+  width: 110px;
+}
+
+.mp-toggle { order: 1; }
+.mp-time { order: 3; }
+.mp-mute { order: 4; }
+
+.mp-mute {
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.mp-mute:hover {
+  color: var(--text-primary);
+}
+
+.mp-mute svg {
+  width: 16px;
+  height: 16px;
+}
+
+.mp-mute .mp-slash { display: none; }
+.music-player.is-muted .mp-mute .mp-slash { display: inline; }
+.music-player.is-muted .mp-mute .mp-waves { display: none; }
+
+/* Native range, restyled to a thin timeline */
+.mp-seek {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  --p: 0%;
+}
+
+.mp-seek::-webkit-slider-runnable-track {
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to right, var(--text-primary) var(--p), rgba(255, 255, 255, 0.18) var(--p));
+}
+
+.mp-seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background-color: var(--text-primary);
+}
+
+.mp-seek::-moz-range-track {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.mp-seek::-moz-range-progress {
+  height: 2px;
+  background: var(--text-primary);
+}
+
+.mp-seek::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--text-primary);
+}
+
+.mp-seek:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* Touch devices say "tap", not "click" */
+@media (hover: none) {
+  .mp-hint-desktop { display: none; }
+  .mp-hint-touch { display: inline; }
+}
+
+/* Phones: smaller footprint — seek becomes a thin line along the top edge */
+@media (max-width: 600px) {
+  .music-player {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    gap: var(--space-8);
+    padding: 4px 8px 4px 4px;
+  }
+
+  .mp-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .music-player:is([data-state="playing"], [data-state="paused"], [data-state="loading"]) .mp-seek-wrap {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    top: -10px;
+    width: auto;
+  }
+
+  .mp-mute {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Phones, past the hero: compact so it never sits on top of what you're reading.
+   Off/paused → just the round play button (its accessible name still says what it does).
+   Playing → pause icon + equalizer + time, no words: the state is still clear. */
+@media (max-width: 600px) {
+  .music-player.is-compact .mp-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .music-player.is-compact:is([data-state="off"], [data-state="error"]) {
+    padding: 4px;
+    gap: 0;
+  }
+
+  .music-player.is-compact:is([data-state="off"], [data-state="error"]) .mp-text {
+    display: none;
+  }
 }

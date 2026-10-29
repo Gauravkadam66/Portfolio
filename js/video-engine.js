@@ -49,14 +49,20 @@ export class VideoExhibitionEngine {
     });
   }
 
-  // Only one card plays sound at a time
+  // Only one card plays sound at a time — and the site music steps aside for it
   handleUnmute(activePlayer) {
     this.players.forEach(p => {
       if (p !== activePlayer) p.setMuted(true);
     });
+    document.dispatchEvent(new CustomEvent('site-audio', { detail: { source: 'video' } }));
   }
 
   bindEvents() {
+    // Site music started: silence any unmuted video card
+    document.addEventListener('site-audio', (e) => {
+      if (e.detail?.source === 'music') this.players.forEach(p => { if (!p.isMuted) p.setMuted(true); });
+    });
+
     // Lightbox modal logic
     const modal = document.getElementById('lightbox-modal');
     const closeBtn = document.getElementById('lightbox-close');
@@ -94,8 +100,9 @@ export class VideoExhibitionEngine {
     modal.classList.add('is-open');
     document.body.style.overflow = 'hidden';
 
-    // Lightbox takes over audio
+    // Lightbox takes over audio (card muted, site music paused)
     player.setMuted(true);
+    document.dispatchEvent(new CustomEvent('site-audio', { detail: { source: 'video' } }));
 
     // If real video is active and ready
     if (player.hasRealVideo && player.videoElement && player.isVideoLoaded) {

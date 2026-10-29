@@ -72,6 +72,38 @@
   .hero-roles {
     margin-bottom: var(--space-32);
   }
+
+  .about-layout,
+  .about-process {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-48);
+  }
+
+  .about-photo--primary,
+  .about-column,
+  .about-layout.no-primary .about-column,
+  .about-process-quote,
+  .about-process-list-wrap {
+    grid-column: 1 / -1;
+  }
+
+  /* One column: words first, then the photographs */
+  .about-column {
+    display: contents;
+  }
+
+  .about-lede { order: 1; }
+  .about-photo--primary { order: 2; }
+  .about-photo--support { order: 3; }
+  .about-offclock { order: 4; }
+
+  .about-photo--primary .about-photo-frame {
+    aspect-ratio: 4 / 4.6;
+  }
+
+  .about-process {
+    margin-top: var(--space-128);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -131,8 +163,17 @@
   }
 
   .section-timeline-header {
-    padding-top: var(--space-64);
-    margin-bottom: var(--space-32);
+    padding-top: var(--space-128);
+  }
+
+  /* Split intros and subsection rows stack on phones */
+  .section-title-wrap--split,
+  .subsection-header {
+    grid-template-columns: 1fr;
+  }
+
+  .subsection + .subsection {
+    margin-top: var(--space-96);
   }
 
   .timeline-motif-bar {
@@ -145,11 +186,6 @@
   .reels-grid-3col {
     grid-template-columns: 1fr;
     gap: var(--space-48);
-  }
-
-  .subsection-meta {
-    margin-left: 0;
-    width: 100%;
   }
 
   .project-details {
@@ -308,8 +344,25 @@
     transition: none !important;
   }
 
-  .reveal-on-scroll {
+  /* All reveals: content simply present */
+  .reveal-on-scroll,
+  .reveal-rise,
+  .reveal-lines .reveal-line > span {
     opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .reveal-mask > * {
+    clip-path: none !important;
+  }
+
+  /* Static equalizer bars, no parallax */
+  .mp-eq i {
+    animation: none !important;
+    transform: scaleY(0.7);
+  }
+
+  .about-photo-frame.has-parallax img {
     transform: none !important;
   }
 

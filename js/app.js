@@ -6,6 +6,9 @@ import { VideoExhibitionEngine } from './video-engine.js';
 import { TimelineController } from './timeline-controller.js';
 import { EditorialCursor } from './cursor.js';
 import { HeroTypewriter, HeroBackgroundVideo } from './hero.js';
+import { MusicPlayer } from './music-player.js';
+import { AboutSection } from './about.js';
+import { SwipeGallery } from './swipe-gallery.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Core Systems
@@ -14,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const videoEngine = new VideoExhibitionEngine();
   const timelineController = new TimelineController();
   const cursor = new EditorialCursor();
+  const musicPlayer = new MusicPlayer();
+  const about = new AboutSection();
+  document.querySelectorAll('[data-swipe-gallery]').forEach(el => new SwipeGallery(el));
 
   // Hero first; then buffer the rest of the page's videos in the background.
   // (Capped at 2.5s so a slow hero never holds everything else back.)

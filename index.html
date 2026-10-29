@@ -6,6 +6,9 @@
   <title>GAURAV — Creative Director & Motion Designer</title>
   <meta name="description" content="Portfolio of Gaurav — Creative Director & Motion Designer. Storytelling, pacing, visual language and creative direction.">
 
+  <!-- Reveal effects only hide content when JS is running to reveal it again -->
+  <script>document.documentElement.classList.add('js');</script>
+
   <!-- CSS Stylesheets -->
   <link rel="stylesheet" href="./css/design-tokens.css">
   <link rel="stylesheet" href="./css/main.css">
@@ -130,14 +133,12 @@
   </section>
 
   <!-- ======================================================================
-       02 — THE WORK
-       01 / Figuring It Out (Flagship)
+       THE WORK — the timeline starts here (playhead tracks scroll through the section)
        ====================================================================== -->
   <section class="section-timeline-header" id="selected-work">
     <div class="canvas-container">
 
-      <div class="timeline-motif-bar">
-        <span class="timeline-sec-num">02 / WORK</span>
+      <div class="timeline-motif-bar" aria-hidden="true">
         <div class="timeline-scrubber-track">
           <div class="timeline-scrubber-fill"></div>
           <div class="timeline-scrubber-head"></div>
@@ -151,13 +152,8 @@
 
       <div class="section-body">
         <div class="subsection">
-          <div class="subsection-header">
-            <span class="subsection-index">01 /</span>
-            <span class="subsection-meta">EDITING · MOTION · STORY</span>
-          </div>
-
           <!-- Flagship Exhibition Project -->
-          <div class="exhibition-project reveal-on-scroll">
+          <div class="exhibition-project reveal-mask">
             <div class="video-exhibition-frame aspect-16-9" data-motion-theme="selected" data-duration="14" data-video-src="/assets/videos/flagship_01.mp4">
               <canvas class="canvas-player" aria-label="Rareliquid — How to break into investment banking"></canvas>
               <div class="video-hud">
@@ -173,17 +169,20 @@
               </div>
             </div>
 
-            <div class="project-details">
+            <!-- Title + role rise into view line by line as the project arrives -->
+            <div class="project-details reveal-lines">
               <div>
                 <h3 class="project-title">
-                  <a href="https://www.youtube.com/@rareliquid/videos" target="_blank" rel="noopener noreferrer" class="project-title-link">
-                    <span class="project-title-text">Rareliquid | How to break into investment banking full guide</span>
-                    <span class="project-title-arrow" aria-hidden="true">↗</span>
-                  </a>
+                  <span class="reveal-line"><span>
+                    <a href="https://www.youtube.com/@rareliquid/videos" target="_blank" rel="noopener noreferrer" class="project-title-link">
+                      <span class="project-title-text">Rareliquid | How to break into investment banking full guide</span>
+                      <span class="project-title-arrow" aria-hidden="true">↗</span>
+                    </a>
+                  </span></span>
                 </h3>
-                <p class="project-disciplines">Video Editing · Motion Design · Sound Design</p>
+                <p class="project-disciplines"><span class="reveal-line"><span>Video editing · Motion design · Sound design</span></span></p>
               </div>
-              <div class="project-year">2026</div>
+              <div class="project-year"><span class="reveal-line"><span>2026</span></span></div>
             </div>
           </div>
         </div>
@@ -193,28 +192,19 @@
   </section>
 
   <!-- ======================================================================
-       03 — VSL
-       "When the message matters, every second has a job."
+       VSL — split intro: heading left, statement right
        ====================================================================== -->
   <section class="section-timeline-header" id="vsl">
     <div class="canvas-container">
 
-      <div class="timeline-motif-bar">
-        <span class="timeline-sec-num">03 / VSL</span>
-        <div class="timeline-scrubber-track">
-          <div class="timeline-scrubber-fill"></div>
-          <div class="timeline-scrubber-head"></div>
-        </div>
-      </div>
-
-      <div class="section-title-wrap">
+      <div class="section-title-wrap section-title-wrap--split">
         <h2 class="section-heading">VSL</h2>
         <p class="section-statement">When the message matters, every second has a job.</p>
       </div>
 
       <div class="section-body video-grid">
 
-        <div class="video-cell reveal-on-scroll">
+        <div class="video-cell reveal-mask">
           <div class="video-cell-index">01</div>
           <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="10" data-video-src="/assets/videos/vsl_01.mp4">
             <canvas class="canvas-player" aria-label="VSL 01"></canvas>
@@ -232,7 +222,7 @@
           </div>
         </div>
 
-        <div class="video-cell reveal-on-scroll">
+        <div class="video-cell reveal-mask">
           <div class="video-cell-index">02</div>
           <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="12" data-video-src="/assets/videos/vsl_02.mp4">
             <canvas class="canvas-player" aria-label="VSL 02"></canvas>
@@ -250,7 +240,7 @@
           </div>
         </div>
 
-        <div class="video-cell reveal-on-scroll">
+        <div class="video-cell reveal-mask">
           <div class="video-cell-index">03</div>
           <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="11" data-video-src="/assets/videos/vsl_03.mp4">
             <canvas class="canvas-player" aria-label="VSL 03"></canvas>
@@ -268,7 +258,7 @@
           </div>
         </div>
 
-        <div class="video-cell reveal-on-scroll">
+        <div class="video-cell reveal-mask">
           <div class="video-cell-index">04</div>
           <div class="video-exhibition-frame aspect-16-9" data-motion-theme="vsl" data-duration="12" data-video-src="/assets/videos/vsl_04.mp4">
             <canvas class="canvas-player" aria-label="VSL 04"></canvas>
@@ -292,19 +282,10 @@
   </section>
 
   <!-- ======================================================================
-       04 — LONG-FORM / YOUTUBE
-       01 / Explainers (4) · 02 / Podcasts (2)
+       LONG-FORM / YOUTUBE — Explainers (4) · Podcasts (2)
        ====================================================================== -->
   <section class="section-timeline-header" id="long-form">
     <div class="canvas-container">
-
-      <div class="timeline-motif-bar">
-        <span class="timeline-sec-num">04 / LONG-FORM</span>
-        <div class="timeline-scrubber-track">
-          <div class="timeline-scrubber-fill"></div>
-          <div class="timeline-scrubber-head"></div>
-        </div>
-      </div>
 
       <div class="section-title-wrap">
         <h2 class="section-heading">LONG-FORM / YOUTUBE</h2>
@@ -312,17 +293,16 @@
 
       <div class="section-body">
 
-        <!-- 01 / EXPLAINERS -->
+        <!-- Explainers -->
         <div class="subsection">
           <div class="subsection-header">
-            <span class="subsection-index">01 /</span>
-            <h3 class="subsection-title">EXPLAINERS</h3>
+            <h3 class="subsection-title">Explainers</h3>
+            <p class="subsection-desc">Making complex ideas easy to follow without making them feel boring.</p>
           </div>
-          <p class="subsection-desc">Making complex ideas easy to follow without making them feel boring.</p>
 
           <div class="video-grid">
 
-            <div class="video-cell reveal-on-scroll">
+            <div class="video-cell reveal-mask">
               <div class="video-cell-index">01</div>
               <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="15" data-video-src="/assets/videos/explainer_01.mp4">
                 <canvas class="canvas-player" aria-label="Explainer 01"></canvas>
@@ -340,7 +320,7 @@
               </div>
             </div>
 
-            <div class="video-cell reveal-on-scroll">
+            <div class="video-cell reveal-mask">
               <div class="video-cell-index">02</div>
               <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="13" data-video-src="/assets/videos/explainer_02.mp4">
                 <canvas class="canvas-player" aria-label="Explainer 02"></canvas>
@@ -358,7 +338,7 @@
               </div>
             </div>
 
-            <div class="video-cell reveal-on-scroll">
+            <div class="video-cell reveal-mask">
               <div class="video-cell-index">03</div>
               <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="14" data-video-src="/assets/videos/explainer_03.mp4">
                 <canvas class="canvas-player" aria-label="Explainer 03"></canvas>
@@ -376,7 +356,7 @@
               </div>
             </div>
 
-            <div class="video-cell reveal-on-scroll">
+            <div class="video-cell reveal-mask">
               <div class="video-cell-index">04</div>
               <div class="video-exhibition-frame aspect-16-9" data-motion-theme="explainer" data-duration="12" data-video-src="/assets/videos/explainer_04.mp4">
                 <canvas class="canvas-player" aria-label="Explainer 04"></canvas>
@@ -397,17 +377,16 @@
           </div>
         </div>
 
-        <!-- 02 / PODCASTS -->
+        <!-- Podcasts -->
         <div class="subsection">
           <div class="subsection-header">
-            <span class="subsection-index">02 /</span>
-            <h3 class="subsection-title">PODCASTS</h3>
+            <h3 class="subsection-title">Podcasts</h3>
+            <p class="subsection-desc">Conversations shaped through pacing, rhythm, and visual detail.</p>
           </div>
-          <p class="subsection-desc">Conversations shaped through pacing, rhythm, and visual detail.</p>
 
           <div class="video-grid">
 
-            <div class="video-cell reveal-on-scroll">
+            <div class="video-cell reveal-mask">
               <div class="video-cell-index">01</div>
               <div class="video-exhibition-frame aspect-16-9" data-motion-theme="podcast" data-duration="16" data-video-src="/assets/videos/podcast_01.mp4">
                 <canvas class="canvas-player" aria-label="Podcast 01"></canvas>
@@ -425,7 +404,7 @@
               </div>
             </div>
 
-            <div class="video-cell reveal-on-scroll">
+            <div class="video-cell reveal-mask">
               <div class="video-cell-index">02</div>
               <div class="video-exhibition-frame aspect-16-9" data-motion-theme="podcast" data-duration="12" data-video-src="/assets/videos/podcast_02.mp4">
                 <canvas class="canvas-player" aria-label="Podcast 02"></canvas>
@@ -452,29 +431,21 @@
   </section>
 
   <!-- ======================================================================
-       05 — SHORT-FORM / SOCIAL
-       9:16 Vertical Precision
+       SHORT-FORM / SOCIAL — 9:16 reels (native swipe gallery below 992px)
        ====================================================================== -->
   <section class="section-timeline-header" id="short-form">
     <div class="canvas-container">
 
-      <div class="timeline-motif-bar">
-        <span class="timeline-sec-num">05 / SOCIAL</span>
-        <div class="timeline-scrubber-track">
-          <div class="timeline-scrubber-fill"></div>
-          <div class="timeline-scrubber-head"></div>
-        </div>
-      </div>
-
-      <div class="section-title-wrap">
+      <div class="section-title-wrap section-title-wrap--split">
         <h2 class="section-heading">SHORT-FORM / SOCIAL</h2>
         <p class="section-statement">Less time to say it. More intention behind every frame.</p>
       </div>
 
-      <div class="section-body reels-grid-3col">
+      <div class="section-body reels-gallery" data-swipe-gallery>
+      <div class="reels-grid-3col" data-swipe-track role="region" aria-label="Short-form reels" tabindex="0">
 
         <!-- Reel 01 -->
-        <div class="exhibition-project reveal-on-scroll">
+        <div class="exhibition-project reveal-mask">
           <div class="project-meta-top">
             <span class="project-index">01 /</span>
             <span class="project-timecode">EDITING · MOTION · RHYTHM</span>
@@ -495,7 +466,7 @@
         </div>
 
         <!-- Reel 02 -->
-        <div class="exhibition-project reveal-on-scroll">
+        <div class="exhibition-project reveal-mask">
           <div class="project-meta-top">
             <span class="project-index">02 /</span>
             <span class="project-timecode">STORY · DESIGN · PACING</span>
@@ -516,7 +487,7 @@
         </div>
 
         <!-- Reel 03 -->
-        <div class="exhibition-project reveal-on-scroll">
+        <div class="exhibition-project reveal-mask">
           <div class="project-meta-top">
             <span class="project-index">03 /</span>
             <span class="project-timecode">MOTION · TYPE · SOUND</span>
@@ -538,56 +509,86 @@
 
       </div>
 
+      <!-- Swipe-gallery controls (shown only while the reels are a horizontal gallery) -->
+      <div class="swipe-controls" data-swipe-controls hidden>
+        <button type="button" class="swipe-btn" data-swipe-prev aria-label="Previous reel">←</button>
+        <span class="swipe-count" data-swipe-count aria-live="polite">1 / 3</span>
+        <button type="button" class="swipe-btn" data-swipe-next aria-label="Next reel">→</button>
+      </div>
+      </div>
+
     </div>
   </section>
 
   <!-- ======================================================================
-       09 — ABOUT
-       Statement + Bio + Process (No fake percentages)
+       ABOUT — "The person behind the pixels."
+       Photos live in public/assets/photos/ (see README.md there). Any photo that
+       is missing is simply left out and the layout closes up around it.
        ====================================================================== -->
   <section class="about-section" id="about">
     <div class="canvas-container">
 
-      <div class="about-grid">
-        <div class="about-label">
-          <span>09 / ABOUT</span>
-        </div>
+      <h2 class="about-headline reveal-rise">The person behind the pixels.</h2>
 
-        <div class="about-content">
-          <h2 class="about-lead-statement">
-            “I like figuring out what a piece needs before deciding how it should look.”
-          </h2>
+      <div class="about-layout" data-about>
 
-          <p class="about-bio">
-            I’m Gaurav. I am a magician and my magic is to make people feel something with exciting visuals. Most of my work sits somewhere between storytelling and problem-solving, finding the right pace, the right frame, and knowing when to leave things alone.
+        <!-- Primary photograph (tall). Captions are editable copy. -->
+        <figure class="about-photo about-photo--primary reveal-mask" data-about-photo="primary">
+          <div class="about-photo-frame" data-parallax>
+            <img src="/assets/photos/about-main.jpg" alt="Gaurav at work at his editing setup" loading="lazy" decoding="async">
+          </div>
+          <figcaption>Most of the job happens here.</figcaption>
+        </figure>
+
+        <div class="about-column">
+          <p class="about-lede reveal-rise">
+            I spend my days turning ideas into things people can feel, mostly through video editing and motion design, where the real work is storytelling and solving the creative problem in front of me. Outside of that, I’m probably making music, chasing a new obsession, or trying to get better at something nobody asked me to.
           </p>
 
-          <div class="capabilities-wrapper">
-            <div class="capabilities-header">WHAT I BRING TO THE PROCESS</div>
-            <ul class="capabilities-list">
-              <li class="capability-item">
-                <span>EDITING &amp; PACING</span>
-                <span class="capability-num mono">01</span>
-              </li>
-              <li class="capability-item">
-                <span>MOTION &amp; VISUAL LANGUAGE</span>
-                <span class="capability-num mono">02</span>
-              </li>
-              <li class="capability-item">
-                <span>STORY &amp; STRUCTURE</span>
-                <span class="capability-num mono">03</span>
-              </li>
-              <li class="capability-item">
-                <span>SOUND &amp; RHYTHM</span>
-                <span class="capability-num mono">04</span>
-              </li>
-              <li class="capability-item">
-                <span>CREATIVE DIRECTION</span>
-                <span class="capability-num mono">05</span>
-              </li>
-            </ul>
-          </div>
+          <!-- Supporting photograph (landscape) -->
+          <figure class="about-photo about-photo--support reveal-mask" style="--reveal-delay: 120ms" data-about-photo>
+            <div class="about-photo-frame">
+              <img src="/assets/photos/about-02.jpg" alt="Gaurav working, a second angle" loading="lazy" decoding="async">
+            </div>
+            <figcaption>Somewhere between the timeline and the sound mix.</figcaption>
+          </figure>
 
+          <div class="about-offclock">
+            <!-- Small candid detail -->
+            <figure class="about-photo about-photo--detail reveal-mask" style="--reveal-delay: 220ms" data-about-photo>
+              <div class="about-photo-frame">
+                <img src="/assets/photos/about-03.jpg" alt="A candid detail from Gaurav's workspace" loading="lazy" decoding="async">
+              </div>
+            </figure>
+
+            <div class="about-notes">
+              <p class="about-note reveal-rise" style="--reveal-delay: 160ms">
+                Somewhere on my drive: over 150 songs that have never left it.
+                <button type="button" class="about-note-action" data-music-trigger hidden>Hear one</button>
+              </p>
+              <p class="about-note about-note--osu reveal-rise" style="--reveal-delay: 240ms">
+                I edit frames for a living. I chase
+                <button type="button" class="osu-hit" aria-label="circles (osu! easter egg)"><span class="osu-hit-word">circles</span><span class="osu-hit-circle" aria-hidden="true"><span class="osu-hit-approach"></span></span></button>
+                for fun.
+                <span class="about-note-aside">osu!, if you’re wondering.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How I work (kept from the previous About; numbers removed) -->
+      <div class="about-process">
+        <p class="about-process-quote reveal-rise">“I like figuring out what a piece needs before deciding how it should look.”</p>
+        <div class="about-process-list-wrap">
+          <h3 class="about-process-heading">What I bring to the process</h3>
+          <ul class="capabilities-list">
+            <li class="capability-item">Editing &amp; pacing</li>
+            <li class="capability-item">Motion &amp; visual language</li>
+            <li class="capability-item">Story &amp; structure</li>
+            <li class="capability-item">Sound &amp; rhythm</li>
+            <li class="capability-item">Creative direction</li>
+          </ul>
         </div>
       </div>
 
@@ -601,8 +602,7 @@
   <section class="contact-section" id="contact">
     <div class="canvas-container">
 
-      <div class="timeline-motif-bar" style="margin-bottom: var(--space-48);">
-        <span class="timeline-sec-num">10 / CONTACT</span>
+      <div class="timeline-motif-bar" style="margin-bottom: var(--space-48);" aria-hidden="true" data-timeline-static>
         <div class="timeline-scrubber-track">
           <div class="timeline-scrubber-fill" style="width: 100%;"></div>
           <div class="timeline-scrubber-head" style="left: 100%;"></div>
@@ -695,6 +695,31 @@
       <video class="lightbox-media" id="lightbox-video" controls playsinline style="display: none;"></video>
       <canvas class="lightbox-media" id="lightbox-canvas" width="1280" height="720"></canvas>
     </div>
+  </div>
+
+  <!-- Music player — OFF by default, never autoplays.
+       Track: public/assets/audio/music.mp3 (change data-src / data-title to swap it).
+       Stays hidden unless that file actually exists. -->
+  <div class="music-player" id="music-player" data-src="/assets/audio/music.mp3" data-title="Original music by Gaurav" data-state="off" hidden>
+    <div class="mp-seek-wrap">
+      <input type="range" class="mp-seek" min="0" max="1000" step="1" value="0" aria-label="Seek music" disabled>
+    </div>
+    <button type="button" class="mp-toggle" aria-label="Play Gaurav's music">
+      <span class="mp-icon" aria-hidden="true"></span>
+      <span class="mp-text" aria-hidden="true">
+        <span class="mp-label">Sound off · <span class="mp-hint-desktop">click</span><span class="mp-hint-touch">tap</span> to listen</span>
+        <span class="mp-eq"><i></i><i></i><i></i><i></i></span>
+      </span>
+    </button>
+    <span class="mp-time" aria-hidden="true"><span class="mp-elapsed">0:00</span> / <span class="mp-duration">0:00</span></span>
+    <button type="button" class="mp-mute" aria-label="Mute music" aria-pressed="false">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2.5 6h2.5l3.5-3v10l-3.5-3H2.5z" fill="currentColor" stroke="none"/>
+        <path class="mp-waves" d="M10.8 5.6a3.2 3.2 0 0 1 0 4.8M12.6 3.8a5.8 5.8 0 0 1 0 8.4"/>
+        <path class="mp-slash" d="M10.5 5.5l4 5M14.5 5.5l-4 5"/>
+      </svg>
+    </button>
+    <span class="sr-only" aria-live="polite" data-mp-status></span>
   </div>
 
   <!-- Custom Contextual Cursor (Desktop only) -->

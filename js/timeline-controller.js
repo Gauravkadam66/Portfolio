@@ -72,6 +72,8 @@ export class TimelineController {
     const updates = [];
 
     this.sections.forEach(sec => {
+      // Contact shows the finished edit (always 100%); only scroll-tracking bars are measured
+      if (sec.querySelector('[data-timeline-static]')) return;
       const scrubberFill = sec._scrubFill || (sec._scrubFill = sec.querySelector('.timeline-scrubber-fill'));
       const scrubberHead = sec._scrubHead || (sec._scrubHead = sec.querySelector('.timeline-scrubber-head'));
       if (!scrubberFill || !scrubberHead) return;
@@ -92,16 +94,24 @@ export class TimelineController {
   }
 
   initIntersectionObserver() {
-    // Reveal animations on scroll
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-    const revealObserver = new IntersectionObserver((entries) => {
+    // Reveal animations on scroll: fade (default), mask (media), rise (text), lines (titles)
+    const revealElements = document.querySelectorAll('.reveal-on-scroll, .reveal-mask, .reveal-rise, .reveal-lines');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
+          const el = entry.target;
+          el.classList.add('is-revealed');
+          observer.unobserve(el); // reveal once, then stop watching
+          // Mask reveals: drop the clip once the (staggered) wipe has finished,
+          // so glows/scale aren't cut off and the frame's own transitions take over again
+          if (el.classList.contains('reveal-mask')) {
+            const delay = parseFloat(getComputedStyle(el).getPropertyValue('--reveal-delay')) || 0;
+            setTimeout(() => el.classList.add('reveal-done'), 900 + 90 + delay + 100);
+          }
         }
       });
     }, {
-      threshold: 0.1,
+      threshold: 0.12,
       rootMargin: '0px 0px -40px 0px'
     });
 
